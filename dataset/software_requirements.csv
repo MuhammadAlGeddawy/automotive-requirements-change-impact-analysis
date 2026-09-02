@@ -1,0 +1,31 @@
+id,parent_sys,status,text,type,version
+SWR-001,SYS-001,approved,The obstacle detector shall classify an obstacle as detected when distance <= 2 meters.,software_requirement,1
+SWR-002,SYS-002,approved,The obstacle processing task shall publish obstacle distance measurements.,software_requirement,1
+SWR-003,SYS-003,approved,The ambient-light task shall calculate filtered lux values.,software_requirement,1
+SWR-004,SYS-004,approved,The headlight controller shall enable the headlight output when filtered lux < 100.,software_requirement,1
+SWR-005,SYS-005,approved,The tire-pressure task shall calculate pressure deviation from the configured threshold.,software_requirement,1
+SWR-006,SYS-006,approved,The tire-pressure warning task shall set the warning flag when pressure is below threshold.,software_requirement,1
+SWR-007,SYS-007,approved,The parking detector shall classify proximity measurements up to 1.5 meters.,software_requirement,1
+SWR-008,SYS-008,approved,The parking warning task shall publish obstacle distance to the warning controller.,software_requirement,1
+SWR-009,SYS-009,approved,The hazard manager shall detect confirmed hazard events.,software_requirement,1
+SWR-010,SYS-010,approved,The warning output task shall generate an audible warning within 200 milliseconds.,software_requirement,1
+SWR-011,SYS-011,approved,The rain estimator shall calculate rainfall intensity from sensor readings.,software_requirement,1
+SWR-012,SYS-012,approved,The wiper controller shall enable wiping when rainfall exceeds the configured threshold.,software_requirement,1
+SWR-013,SYS-013,approved,The cruise controller shall calculate speed error using the configured target speed.,software_requirement,1
+SWR-014,SYS-014,approved,The cruise controller shall constrain speed error to the defined tolerance.,software_requirement,1
+SWR-015,SYS-015,approved,The battery monitor shall calculate voltage deviation across cells.,software_requirement,1
+SWR-016,SYS-016,approved,The battery diagnostic task shall report deviation when it exceeds 50 mV.,software_requirement,1
+SWR-017,SYS-017,approved,The door monitor shall detect door-state transitions.,software_requirement,1
+SWR-018,SYS-018,approved,The door event task shall publish an open-door event within 100 milliseconds.,software_requirement,1
+SWR-019,SYS-019,approved,The lane estimator shall calculate lateral distance to lane boundaries.,software_requirement,1
+SWR-020,SYS-020,approved,The lane warning task shall generate a warning when a boundary crossing is confirmed.,software_requirement,1
+SWR-021,SYS-021,approved,The obstacle processing task shall execute every 50 milliseconds.,software_requirement,1
+SWR-022,SYS-022,approved,The obstacle processing task shall ignore measurements marked invalid.,software_requirement,1
+SWR-023,SYS-023,approved,The ambient-light task shall execute at least every 100 milliseconds.,software_requirement,1
+SWR-024,SYS-024,approved,The tire-pressure acquisition task shall update status every 1 second.,software_requirement,1
+SWR-025,SYS-025,approved,The parking processing task shall execute every 50 milliseconds.,software_requirement,1
+SWR-026,SYS-026,approved,The hazard manager shall attach a timestamp to confirmed hazards.,software_requirement,1
+SWR-027,SYS-027,approved,The cruise speed task shall execute every 20 milliseconds.,software_requirement,1
+SWR-028,SYS-028,approved,The battery sampling task shall execute every 100 milliseconds.,software_requirement,1
+SWR-029,SYS-029,approved,The door sampling task shall execute every 20 milliseconds.,software_requirement,1
+SWR-030,SYS-030,approved,The lane estimation task shall execute every 50 milliseconds.,software_requirement,1

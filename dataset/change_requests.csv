@@ -1,0 +1,6 @@
+change_id,change_type,new_text,new_version,old_text,old_version,reason,requirement_id
+CR-001,parameter_change,The vehicle shall detect obstacles within 3 meters.,2,The vehicle shall detect obstacles within 2 meters.,1,Customer increased obstacle detection range.,SR-001
+CR-002,threshold_change,The vehicle shall automatically activate the headlights when ambient light is below 80 lux.,2,The vehicle shall automatically activate the headlights when ambient light is below 100 lux.,1,New lighting specification requires activation at lower ambient light.,SR-002
+CR-003,timing_constraint_change,The driver warning function shall issue an audible warning within 100 milliseconds of a confirmed hazard.,2,The driver warning function shall issue an audible warning within 200 milliseconds of a confirmed hazard.,1,Driver warning response time tightened.,SR-005
+CR-004,threshold_change,The battery monitoring function shall detect cell voltage deviations greater than 30 mV.,2,The battery monitoring function shall detect cell voltage deviations greater than 50 mV.,1,Battery diagnostic sensitivity increased.,SR-008
+CR-005,timing_constraint_change,The vehicle shall detect an open door within 50 milliseconds.,2,The vehicle shall detect an open door within 100 milliseconds.,1,Door event response time tightened.,SR-009

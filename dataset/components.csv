@@ -1,0 +1,15 @@
+description,id,name,type
+Processes radar/proximity data and detects obstacles.,COMP-001,ObstacleDetector,component
+Publishes obstacle distance measurements.,COMP-002,ObstaclePublisher,component
+Filters ambient light and controls headlight activation.,COMP-003,AmbientLightManager,component
+Controls the headlight output.,COMP-004,HeadlightController,component
+Processes tire pressure measurements and warnings.,COMP-005,TirePressureManager,component
+Detects obstacles during parking maneuvers.,COMP-006,ParkingDetector,component
+Manages confirmed hazards and warning events.,COMP-007,HazardManager,component
+Generates audible driver warnings.,COMP-008,WarningOutput,component
+Estimates rainfall intensity.,COMP-009,RainEstimator,component
+Controls windshield wiping.,COMP-010,WiperController,component
+Controls vehicle speed.,COMP-011,CruiseController,component
+Monitors individual cell voltages.,COMP-012,BatteryMonitor,component
+Monitors door states.,COMP-013,DoorMonitor,component
+Estimates vehicle position relative to lane boundaries.,COMP-014,LaneEstimator,component

@@ -1,0 +1,31 @@
+id,parent_sr,status,text,type,version
+SYS-001,SR-001,approved,The obstacle detection system shall detect objects at distances up to 2 meters.,system_requirement,1
+SYS-002,SR-001,approved,The obstacle detection system shall publish obstacle distance measurements to the vehicle controller.,system_requirement,1
+SYS-003,SR-002,approved,The lighting controller shall measure ambient light intensity.,system_requirement,1
+SYS-004,SR-002,approved,The lighting controller shall activate the headlights when ambient light is below 100 lux.,system_requirement,1
+SYS-005,SR-003,approved,The tire pressure monitoring system shall acquire tire pressure measurements.,system_requirement,1
+SYS-006,SR-003,approved,The tire pressure monitoring system shall generate a warning when pressure falls below the configured threshold.,system_requirement,1
+SYS-007,SR-004,approved,The parking assistance system shall detect obstacles at distances up to 1.5 meters.,system_requirement,1
+SYS-008,SR-004,approved,The parking assistance system shall provide obstacle distance information to the driver warning controller.,system_requirement,1
+SYS-009,SR-005,approved,The driver warning controller shall detect confirmed hazards.,system_requirement,1
+SYS-010,SR-005,approved,The driver warning controller shall issue an audible warning within 200 milliseconds of hazard confirmation.,system_requirement,1
+SYS-011,SR-006,approved,The rain sensor controller shall estimate rainfall intensity.,system_requirement,1
+SYS-012,SR-006,approved,The wiper controller shall activate the wipers when rainfall exceeds the configured threshold.,system_requirement,1
+SYS-013,SR-007,approved,The cruise controller shall maintain the requested vehicle speed within 2 km/h.,system_requirement,1
+SYS-014,SR-007,approved,The cruise controller shall update the requested acceleration based on measured vehicle speed.,system_requirement,1
+SYS-015,SR-008,approved,The battery monitor shall measure individual cell voltages.,system_requirement,1
+SYS-016,SR-008,approved,The battery monitor shall report a cell voltage deviation when the difference exceeds 50 mV.,system_requirement,1
+SYS-017,SR-009,approved,The door controller shall detect door state changes.,system_requirement,1
+SYS-018,SR-009,approved,The door controller shall report an open-door event within 100 milliseconds.,system_requirement,1
+SYS-019,SR-010,approved,The lane monitoring system shall determine the vehicle position relative to lane boundaries.,system_requirement,1
+SYS-020,SR-010,approved,The lane departure controller shall issue a warning when a lane boundary crossing is detected.,system_requirement,1
+SYS-021,SR-001,approved,The obstacle detection system shall process sensor measurements at 20 Hz.,system_requirement,1
+SYS-022,SR-001,approved,The obstacle detection system shall reject obstacle measurements with invalid sensor quality flags.,system_requirement,1
+SYS-023,SR-002,approved,The lighting controller shall sample ambient light at least every 100 milliseconds.,system_requirement,1
+SYS-024,SR-003,approved,The tire pressure monitoring system shall update pressure status at least every 1 second.,system_requirement,1
+SYS-025,SR-004,approved,The parking assistance system shall process proximity sensor measurements at 20 Hz.,system_requirement,1
+SYS-026,SR-005,approved,The warning controller shall timestamp hazard confirmation events.,system_requirement,1
+SYS-027,SR-007,approved,The cruise controller shall sample vehicle speed at least every 20 milliseconds.,system_requirement,1
+SYS-028,SR-008,approved,The battery monitor shall sample cell voltage at least every 100 milliseconds.,system_requirement,1
+SYS-029,SR-009,approved,The door controller shall sample door state at least every 20 milliseconds.,system_requirement,1
+SYS-030,SR-010,approved,The lane monitoring system shall update lane position at least every 50 milliseconds.,system_requirement,1

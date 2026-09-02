@@ -1,0 +1,26 @@
+artifact_id,change_id,expected_impact,reason
+SYS-001,CR-001,high,Detection range changes from 2m to 3m; system requirement still specifies 2m.
+SWR-001,CR-001,high,Software classification threshold is explicitly 2m.
+COMP-001,CR-001,high,Obstacle detector implements the changed detection threshold.
+TC-001,CR-001,high,Test explicitly verifies detection at 2m and should be updated.
+TC-002,CR-001,medium,Test boundary depends on the configured detection range.
+SYS-021,CR-001,medium,Processing behavior may need review as increased detection range can affect sensing workload.
+SYS-022,CR-001,low,Sensor-quality filtering is adjacent to the changed detection function but does not necessarily require modification.
+SYS-025,CR-001,potential,No explicit link exists; semantic relation suggests parking obstacle detection may share range assumptions.
+SYS-004,CR-002,high,System requirement explicitly contains the 100 lux threshold.
+SWR-004,CR-002,high,Software condition explicitly uses 100 lux.
+COMP-004,CR-002,high,Headlight controller implements the output behavior.
+TC-004,CR-002,high,Test explicitly verifies the old 100 lux threshold.
+SYS-010,CR-003,high,System requirement explicitly contains the 200 ms timing constraint.
+SWR-010,CR-003,high,Software requirement explicitly contains the 200 ms timing constraint.
+COMP-008,CR-003,high,Warning output implements the timing-sensitive behavior.
+TC-007,CR-003,high,Test verifies the old 200 ms response time.
+SYS-026,CR-003,medium,Timestamping/latency analysis may need review.
+SYS-016,CR-004,high,System requirement explicitly contains the 50 mV threshold.
+SWR-016,CR-004,high,Software diagnostic threshold is explicitly 50 mV.
+COMP-012,CR-004,high,Battery monitor implements voltage deviation detection.
+TC-010,CR-004,high,Test explicitly verifies the old 50 mV threshold.
+SYS-018,CR-005,high,System requirement explicitly contains the 100 ms timing constraint.
+SWR-018,CR-005,high,Software requirement explicitly contains the 100 ms timing constraint.
+COMP-013,CR-005,high,Door monitor implements event detection timing.
+TC-011,CR-005,high,Test explicitly verifies the old 100 ms timing constraint.

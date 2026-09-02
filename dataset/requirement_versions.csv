@@ -1,0 +1,16 @@
+artifact_id,is_current,text,version
+SR-001,False,The vehicle shall detect obstacles within 2 meters.,1
+SR-002,False,The vehicle shall automatically activate the headlights when ambient light is below 100 lux.,1
+SR-003,True,The vehicle shall warn the driver when tire pressure is below the defined threshold.,1
+SR-004,True,The parking assistance function shall detect obstacles within 1.5 meters of the vehicle.,1
+SR-005,False,The driver warning function shall issue an audible warning within 200 milliseconds of a confirmed hazard.,1
+SR-006,True,The rain sensing function shall activate the wipers when rainfall exceeds the configured threshold.,1
+SR-007,True,The cruise control function shall maintain the configured vehicle speed within a tolerance of 2 km/h.,1
+SR-008,False,The battery monitoring function shall detect cell voltage deviations greater than 50 mV.,1
+SR-009,False,The vehicle shall detect an open door within 100 milliseconds.,1
+SR-010,True,The lane departure warning function shall warn the driver when the vehicle crosses the lane boundary.,1
+SR-001,True,The vehicle shall detect obstacles within 3 meters.,2
+SR-002,True,The vehicle shall automatically activate the headlights when ambient light is below 80 lux.,2
+SR-005,True,The driver warning function shall issue an audible warning within 100 milliseconds of a confirmed hazard.,2
+SR-008,True,The battery monitoring function shall detect cell voltage deviations greater than 30 mV.,2
+SR-009,True,The vehicle shall detect an open door within 50 milliseconds.,2

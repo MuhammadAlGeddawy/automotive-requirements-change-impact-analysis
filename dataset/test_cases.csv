@@ -1,0 +1,20 @@
+id,text,type,verifies
+TC-001,Verify obstacle detection at 2 meters.,test_case,SWR-001
+TC-002,Verify obstacles beyond the configured detection range are not classified as detected.,test_case,SWR-001
+TC-003,Verify ambient light is correctly converted to filtered lux.,test_case,SWR-003
+TC-004,Verify headlights activate below 100 lux.,test_case,SWR-004
+TC-005,Verify low tire pressure generates a driver warning.,test_case,SWR-006
+TC-006,Verify parking obstacles are detected at 1.5 meters.,test_case,SWR-007
+TC-007,Verify audible warning is generated within 200 milliseconds.,test_case,SWR-010
+TC-008,Verify wipers activate above the configured rainfall threshold.,test_case,SWR-012
+TC-009,Verify cruise speed remains within 2 km/h tolerance.,test_case,SWR-014
+TC-010,Verify cell voltage deviation above 50 mV is reported.,test_case,SWR-016
+TC-011,Verify open-door event is published within 100 milliseconds.,test_case,SWR-018
+TC-012,Verify lane departure warning is generated after confirmed boundary crossing.,test_case,SWR-020
+TC-013,Verify obstacle processing executes every 50 milliseconds.,test_case,SWR-021
+TC-014,Verify invalid obstacle measurements are rejected.,test_case,SWR-022
+TC-015,Verify ambient-light processing executes at least every 100 milliseconds.,test_case,SWR-023
+TC-016,Verify cruise speed processing executes every 20 milliseconds.,test_case,SWR-027
+TC-017,Verify battery sampling executes every 100 milliseconds.,test_case,SWR-028
+TC-018,Verify door sampling executes every 20 milliseconds.,test_case,SWR-029
+TC-019,Verify lane estimation executes every 50 milliseconds.,test_case,SWR-030

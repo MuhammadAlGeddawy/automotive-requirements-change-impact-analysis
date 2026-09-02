@@ -1,0 +1,11 @@
+domain,feature,id,priority,status,text,type,version
+ADAS,Obstacle Detection,SR-001,high,approved,The vehicle shall detect obstacles within 2 meters.,stakeholder_requirement,1
+Body,Automatic Headlights,SR-002,high,approved,The vehicle shall automatically activate the headlights when ambient light is below 100 lux.,stakeholder_requirement,1
+Chassis,Tire Pressure Monitoring,SR-003,high,approved,The vehicle shall warn the driver when tire pressure is below the defined threshold.,stakeholder_requirement,1
+ADAS,Parking Assistance,SR-004,high,approved,The parking assistance function shall detect obstacles within 1.5 meters of the vehicle.,stakeholder_requirement,1
+ADAS,Driver Warning,SR-005,high,approved,The driver warning function shall issue an audible warning within 200 milliseconds of a confirmed hazard.,stakeholder_requirement,1
+Body,Rain Sensing,SR-006,medium,approved,The rain sensing function shall activate the wipers when rainfall exceeds the configured threshold.,stakeholder_requirement,1
+ADAS,Cruise Control,SR-007,medium,approved,The cruise control function shall maintain the configured vehicle speed within a tolerance of 2 km/h.,stakeholder_requirement,1
+Powertrain,Battery Monitoring,SR-008,medium,approved,The battery monitoring function shall detect cell voltage deviations greater than 50 mV.,stakeholder_requirement,1
+Body,Door Monitoring,SR-009,medium,approved,The vehicle shall detect an open door within 100 milliseconds.,stakeholder_requirement,1
+ADAS,Lane Departure Warning,SR-010,medium,approved,The lane departure warning function shall warn the driver when the vehicle crosses the lane boundary.,stakeholder_requirement,1

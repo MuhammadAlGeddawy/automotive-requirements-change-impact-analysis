@@ -1,0 +1,27 @@
+{
+  "dataset_name": "Synthetic Automotive Change Impact Analysis Knowledge Base",
+  "version": "1.0",
+  "purpose": "Prototype/evaluate graph + retrieval + LLM based change impact analysis starting from stakeholder requirements.",
+  "counts": {
+    "stakeholder_requirements": 10,
+    "system_requirements": 30,
+    "software_requirements": 30,
+    "components": 14,
+    "test_cases": 19,
+    "traceability_edges": 111,
+    "change_requests": 5,
+    "expected_impact_labels": 25
+  },
+  "intentional_data_quality_issues": {
+    "invalid_links": [
+      "SR-001 -> SYS-019",
+      "SR-005 -> SYS-003"
+    ],
+    "missing_links": [
+      "SR-001 -> SYS-021",
+      "SR-001 -> SYS-022",
+      "SR-001 -> SYS-025 (potential/semantic candidate)"
+    ]
+  },
+  "note": "Synthetic data; not an actual OEM/automotive project. Designed for experimentation."
+}
