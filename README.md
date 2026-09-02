@@ -1,4 +1,4 @@
-# NASAQ - Change Impact Review (Local Streamlit MVP)
+# NASAQ - Change Impact Review (Streamlit Demo)
 
 A user-friendly local Streamlit application for reviewing the impact of
 change requests on automotive engineering artifacts using hybrid retrieval
