@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: nasaq-api
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /health
+    envVars:
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: ALLOWED_ORIGINS
+        sync: false

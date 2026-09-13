@@ -1,6 +1,8 @@
 """Orchestration: the analyze_change(change_id) service boundary."""
 
 from dataclasses import dataclass
+from functools import lru_cache
+from pathlib import Path
 from typing import Optional
 
 import networkx as nx
@@ -35,6 +37,22 @@ class AnalysisResult:
     ranked_candidates: pd.DataFrame
     llm_assessments: Optional[ImpactAnalysisResponse] = None
     error: Optional[str] = None
+
+
+@lru_cache(maxsize=4)
+def _get_pipeline_resources(data_dir_key: str):
+    """Load the dataset and build retrieval resources once per API process."""
+    data_dir = Path(data_dir_key) if data_dir_key else None
+    data = load_data(data_dir)
+    graph = build_graph(data)
+    engine = RetrievalEngine()
+    engine.build_index(get_artifact_records(data))
+    return data, graph, engine
+
+
+def clear_pipeline_cache() -> None:
+    """Clear cached models and indexes, primarily for development or data refreshes."""
+    _get_pipeline_resources.cache_clear()
 
 
 def _get_downstream_nodes(graph: nx.DiGraph, start_node: str) -> list[str]:
@@ -76,7 +94,7 @@ def analyze_change(
     change_id: str,
     data_dir: Optional[str] = None,
     top_k_retrieval: int = 15,
-    top_k_llm: int = 10,
+    top_k_llm: Optional[int] = 10,
     llm_model: str = "nvidia/nemotron-3.5-lightning:free",
     skip_llm: bool = False,
 ) -> AnalysisResult:
@@ -88,12 +106,11 @@ def analyze_change(
     3. Generate candidates via graph traversal + semantic retrieval
     4. Rerank with Cross-Encoder
     5. Hybrid ranking (reranker + graph + semantic)
-    6. LLM impact assessment on top-K
+    6. LLM impact assessment on the selected candidate set
     """
-    # Load data
-    data = load_data()
-    graph = build_graph(data)
-    artifacts = get_artifact_records(data)
+    # Reuse the loaded dataset, embedding model, FAISS index, and reranker.
+    data_dir_key = str(Path(data_dir).resolve()) if data_dir else ""
+    data, graph, engine = _get_pipeline_resources(data_dir_key)
 
     # Get change request
     changes_df = data["changes"]
@@ -118,10 +135,6 @@ def analyze_change(
     new_text = change["new_text"]
     change_type = change["change_type"]
     reason = change["reason"]
-
-    # Build retrieval engine and index
-    engine = RetrievalEngine()
-    engine.build_index(artifacts)
 
     # Build change query
     change_query = f"""
@@ -162,6 +175,16 @@ Find engineering artifacts that may be affected by this change.
             continue
 
         paths = _get_traceability_paths(graph, requirement_id, artifact_id)
+        path_nodes = [
+            [
+                {
+                    "id": path_node,
+                    "type": graph.nodes[path_node].get("type", "engineering_artifact"),
+                }
+                for path_node in path
+            ]
+            for path in paths
+        ]
         current_graph_distance = _graph_distance(graph, requirement_id, artifact_id)
         current_graph_linked = artifact_id in graph_candidates
 
@@ -173,6 +196,7 @@ Find engineering artifacts that may be affected by this change.
             "graph_linked": current_graph_linked,
             "graph_distance": current_graph_distance,
             "paths": paths,
+            "path_nodes": path_nodes,
         })
 
     candidate_df = pd.DataFrame(candidate_records)
@@ -230,7 +254,12 @@ to assessing the impact of this change.
     if not skip_llm:
         try:
             client = create_llm_client()
-            llm_candidates = hybrid_ranked.head(top_k_llm).copy()
+            # ``None`` assesses every candidate shown in the ranked breakdown.
+            llm_candidates = (
+                hybrid_ranked.copy()
+                if top_k_llm is None
+                else hybrid_ranked.head(top_k_llm).copy()
+            )
 
             llm_assessments = assess_impact(
                 client=client,

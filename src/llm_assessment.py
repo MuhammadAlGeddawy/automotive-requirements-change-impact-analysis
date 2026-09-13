@@ -3,10 +3,12 @@
 import json
 import os
 import re
+from collections.abc import Mapping
 from typing import Optional
 
 from openai import OpenAI
 from pydantic import BaseModel, ConfigDict, Field
+import streamlit as st
 from typing import Literal
 
 
@@ -185,13 +187,39 @@ def _extract_json(text: str) -> dict:
     raise ValueError(f"No JSON object found in the LLM response: {text[:200]}")
 
 
-def create_llm_client() -> OpenAI:
-    """Create OpenRouter client from environment variable."""
+def get_openrouter_api_key() -> Optional[str]:
+    """Read the OpenRouter key from the environment or Streamlit secrets.
+
+    Streamlit Cloud and local Streamlit deployments conventionally expose
+    values from ``.streamlit/secrets.toml`` through ``st.secrets``. The
+    environment variable remains the first choice for CLI and CI usage.
+    """
     api_key = os.environ.get("OPENROUTER_API_KEY")
+    if api_key:
+        return api_key
+
+    try:
+        api_key = st.secrets.get("OPENROUTER_API_KEY")
+        if not api_key:
+            openrouter = st.secrets.get("openrouter", {})
+            if isinstance(openrouter, Mapping):
+                api_key = openrouter.get("api_key") or openrouter.get(
+                    "OPENROUTER_API_KEY"
+                )
+    except (FileNotFoundError, KeyError, TypeError):
+        api_key = None
+
+    return str(api_key).strip() if api_key else None
+
+
+def create_llm_client() -> OpenAI:
+    """Create an OpenRouter client from env vars or Streamlit secrets."""
+    api_key = get_openrouter_api_key()
     if not api_key:
         raise EnvironmentError(
             "OPENROUTER_API_KEY not set. "
-            "Set it as an environment variable or in a .env file."
+            "Set it as an environment variable, .env, or "
+            ".streamlit/secrets.toml file."
         )
 
     return OpenAI(

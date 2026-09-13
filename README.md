@@ -1,8 +1,9 @@
-# NASAQ - Change Impact Review (Streamlit Demo)
+# NASAQ - Change Impact Review
 
-A user-friendly local Streamlit application for reviewing the impact of
-change requests on automotive engineering artifacts using hybrid retrieval
-(graph + semantic + cross-encoder reranking) and AI-based impact assessment.
+NASAQ is an engineering intelligence application for reviewing the impact of
+automotive requirement changes. The current product UI is a React/Vite
+frontend backed by a FastAPI adapter over the existing Python analysis
+pipeline. The original Streamlit application remains available as a fallback.
 
 ## Features
 
@@ -22,13 +23,19 @@ change requests on automotive engineering artifacts using hybrid retrieval
 ## Architecture
 
 ```
-app.py                  ← Streamlit UI (single page)
+api.py                  ← FastAPI adapter used by the React frontend
+app.py                  ← Streamlit fallback UI
+frontend/
+├── src/components/     ← NASAQ UI components
+├── src/data/           ← Legacy mock data/reference shapes
+├── src/api.js          ← Frontend API client
+└── src/styles/         ← Global styles
 src/
 ├── data_loader.py      ← CSV loading + traceability graph construction
 ├── retrieval.py        ← Embedding model + FAISS index + Cross-Encoder
 ├── llm_assessment.py   ← OpenRouter LLM client + Pydantic schema
 ├── orchestrator.py     ← analyze_change(change_id) service boundary
-└── evaluation.py       ← (in orchestrator) metrics computation
+└── ...
 tests/
 ├── test_pipeline.py    ← Core logic + baseline evaluation tests
 └── test_llm.py         ← LLM module unit tests
@@ -55,41 +62,121 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
-### Environment Variables
+### Environment variables
 
 ```bash
-# Copy the example
+# Windows
 copy .env.example .env
 
-# Edit .env and add your OpenRouter API key
+# Edit .env and add your OpenRouter API key.
 # OPENROUTER_API_KEY=sk-or-...
 ```
 
-The `.env` file is loaded automatically by the app (via `python-dotenv`
-if available, or set the variable in your shell).
+The FastAPI adapter loads `.env` automatically. Do not commit `.env` or
+expose the API key in frontend code.
 
-## Running the App
+## Running the NASAQ frontend
+
+Start the backend and frontend in separate terminals. Run the backend from the
+repository root:
+
+```powershell
+python -m uvicorn api:app --host 127.0.0.1 --port 8765
+```
+
+Then run the frontend from the `frontend/` directory:
+
+```powershell
+cd frontend
+npm install
+npm run dev
+```
+
+Open the Vite URL shown in the terminal, normally
+`http://localhost:5173/`. The frontend calls:
+
+- `GET http://127.0.0.1:8765/api/change-requests`
+- `POST http://127.0.0.1:8765/api/analyze/{change_id}`
+
+The API port is `8765` because some Windows environments reserve port 8000.
+Keep both terminals running while using NASAQ. The first analysis after
+starting the backend may take longer while the embedding model, FAISS index,
+and reranker load. These resources are cached and reused for later analyses in
+the same backend process.
+
+## Free website deployment
+
+NASAQ is deployed as two public services: Vercel serves the static React
+website, while Render runs the FastAPI analysis API. This keeps the OpenRouter
+credential and the ML pipeline on the server instead of exposing either in
+browser code.
+
+### 1. Deploy the API to Render
+
+1. Push the repository to GitHub and create a new **Web Service** in Render
+   from that repository.
+2. Select the Docker runtime. Render will use the root `Dockerfile` (the
+   included `render.yaml` can also be used as a Blueprint).
+3. Add these environment variables in Render:
+   - `OPENROUTER_API_KEY`: your OpenRouter key.
+   - `ALLOWED_ORIGINS`: the Vercel URL, for example
+     `https://nasaq.vercel.app`. Multiple origins can be comma-separated.
+4. Deploy and verify `https://<render-service>.onrender.com/health` returns
+   `{"status":"ok"}`. Copy the service URL for the frontend step.
+
+The Render free service can sleep after inactivity, so the first request may
+be slow. The first analysis also downloads and loads the embedding and
+reranker models. They are cached for the lifetime of the service process.
+The ML dependency stack may exceed the memory available on some free
+instances; if the service is repeatedly killed or the build fails, use a
+larger Render instance or a host with more memory rather than exposing the
+OpenRouter key in the frontend.
+
+### 2. Deploy the frontend to Vercel
+
+1. Import the same GitHub repository into Vercel.
+2. Keep the repository root as the project root; `vercel.json` configures the
+   `frontend/` build automatically.
+3. Add the environment variable
+   `VITE_API_BASE_URL=https://<render-service>.onrender.com`.
+4. Deploy, then add the resulting Vercel URL to Render's `ALLOWED_ORIGINS` and
+   redeploy the API if needed.
+
+The frontend can also be deployed with the Vercel CLI from the repository
+root:
+
+```powershell
+vercel
+```
+
+Never put `OPENROUTER_API_KEY` in `frontend/.env`, `VITE_*` variables, or
+committed files. Vite bundles `VITE_*` values into public JavaScript.
+
+### Running the Streamlit fallback
+
+The original Streamlit interface remains available independently:
 
 ```bash
-# Option 1: Direct streamlit command
 streamlit run app.py
-
-# Option 2: Using the run.py wrapper (loads .env automatically)
+# Or use the wrapper, which also loads .env:
 python run.py
 ```
 
-The app will open in your browser at `http://localhost:8501`.
+It opens at `http://localhost:8501`.
 
-### Usage
+### Frontend usage
 
 1. **Select a Change Request** from the sidebar (CR-001 through CR-005)
-2. Review the OLD and NEW requirement texts (color-coded: red=old, green=new)
-3. Click **"Analyze Change Impact"** to run the full pipeline (retrieval + LLM)
-4. View the **ranked candidate artifacts** table with hybrid scores
-5. Check the **evaluation metrics** (Recall@k, F1@k)
-6. Select an artifact in the detail panel to view its **full content and traceability paths**
-7. Review **LLM Impact Assessment** for each candidate (DIRECT/POTENTIAL/NO_IMPACT)
-8. Examine **GRAPH-UNLINKED** artifacts for potential missing traceability
+2. Review the previous and updated requirement text.
+3. Click **Analyze Impact** to run the real retrieval and LLM pipeline.
+4. Review KPI totals, compound impact labels, confidence, and traceability flags.
+5. Select an artifact in the Impact Chain section to view its full graph path.
+6. Double-click engineering content in the table to expand or collapse it.
+
+If the frontend reports `Failed to fetch`, confirm that the FastAPI terminal is
+still running and that `http://127.0.0.1:8765/api/change-requests` returns JSON.
+If analysis fails because the OpenRouter key is missing or invalid, verify
+`OPENROUTER_API_KEY` in `.env` and restart the backend.
 
 ## Running Tests
 

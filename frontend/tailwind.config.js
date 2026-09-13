@@ -1,0 +1,45 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: ['./index.html', './src/**/*.{js,jsx}'],
+  theme: {
+    extend: {
+      colors: {
+        'brand-dark': '#0B3D2E',
+        'brand-dark-alt': '#0F2E24',
+        'bg-cream': '#F4F1E8',
+        accent: '#1F9D6C',
+        'accent-hover': '#17825A',
+        'accent-disabled': '#A9C4BA',
+        'diff-prev-bg': '#FDF2F1',
+        'diff-prev-border': '#C0392B',
+        'diff-next-bg': '#F1F8F4',
+        'diff-next-border': '#1F7A5C',
+        heading: '#14261F',
+        body: '#3E4C46',
+        muted: '#6B776F',
+        'sidebar-text': '#F4F1E8',
+        'sidebar-muted': '#9FB3A8',
+        'badge-high-bg': '#FDE8E8',
+        'badge-high-text': '#B91C1C',
+        'badge-medium-bg': '#FEF3E2',
+        'badge-medium-text': '#B45309',
+        'badge-low-bg': '#E8F5EC',
+        'badge-low-text': '#15803D',
+        'flag-unlinked-bg': '#FEF9E7',
+        'flag-unlinked-border': '#D4A017',
+        'flag-unlinked-text': '#92720C',
+      },
+      borderRadius: {
+        nasaq: '16px',
+        'nasaq-sm': '12px',
+      },
+      spacing: {
+        3: '12px',
+        6: '24px',
+        8: '32px',
+        12: '48px',
+      },
+    },
+  },
+  plugins: [],
+}
