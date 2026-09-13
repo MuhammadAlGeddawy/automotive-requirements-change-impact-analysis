@@ -1,5 +1,5 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8765'
-const ANALYSIS_TIMEOUT_MS = 10 * 60 * 1000
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || ''
+const ANALYSIS_TIMEOUT_MS = 30 * 1000
 
 async function request(path, options = {}) {
   const controller = new AbortController()
@@ -14,7 +14,15 @@ async function request(path, options = {}) {
         ...options.headers,
       },
     })
-    const body = await response.json()
+    const responseText = await response.text()
+    let body
+    try {
+      body = responseText ? JSON.parse(responseText) : {}
+    } catch {
+      throw new Error(
+        `API returned a non-JSON response (status ${response.status}). Check the API port and restart Vite.`,
+      )
+    }
     if (!response.ok) {
       throw new Error(body.detail || `Request failed with status ${response.status}`)
     }
@@ -22,7 +30,7 @@ async function request(path, options = {}) {
   } catch (error) {
     if (error.name === 'AbortError') {
       throw new Error(
-        'The analysis exceeded 10 minutes. The first run may still be loading ML models; check the API terminal for details.',
+        'The API request exceeded 30 seconds. Check that the selected local API server is running.',
       )
     }
     if (error instanceof TypeError) {
