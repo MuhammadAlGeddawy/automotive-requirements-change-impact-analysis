@@ -1,0 +1,251 @@
+{
+  "changeId": "CR-001",
+  "requirementId": "SR-001",
+  "highImpact": 4,
+  "mediumImpact": 0,
+  "lowImpact": 6,
+  "totalAffected": 10,
+  "impactChain": [
+    {
+      "id": "SR-001",
+      "type": "stakeholder requirement"
+    },
+    {
+      "id": "SYS-001",
+      "type": "system requirement"
+    }
+  ],
+  "artifacts": [
+    {
+      "artifactId": "SYS-001",
+      "artifactType": "system_requirement",
+      "impactTier": "high",
+      "llmLabel": "DIRECT",
+      "confidence": 0.95,
+      "traceability": "linked",
+      "traceabilityPaths": [
+        [
+          {
+            "id": "SR-001",
+            "type": "stakeholder requirement"
+          },
+          {
+            "id": "SYS-001",
+            "type": "system requirement"
+          }
+        ]
+      ],
+      "engineeringContent": "The obstacle detection system shall detect objects at distances up to 2 meters."
+    },
+    {
+      "artifactId": "SWR-001",
+      "artifactType": "software_requirement",
+      "impactTier": "high",
+      "llmLabel": "DIRECT",
+      "confidence": 0.95,
+      "traceability": "linked",
+      "traceabilityPaths": [
+        [
+          {
+            "id": "SR-001",
+            "type": "stakeholder requirement"
+          },
+          {
+            "id": "SYS-001",
+            "type": "system requirement"
+          },
+          {
+            "id": "SWR-001",
+            "type": "software requirement"
+          }
+        ]
+      ],
+      "engineeringContent": "The obstacle detector shall classify an obstacle as detected when distance <= 2 meters."
+    },
+    {
+      "artifactId": "TC-001",
+      "artifactType": "test_case",
+      "impactTier": "high",
+      "llmLabel": "DIRECT",
+      "confidence": 0.95,
+      "traceability": "linked",
+      "traceabilityPaths": [
+        [
+          {
+            "id": "SR-001",
+            "type": "stakeholder requirement"
+          },
+          {
+            "id": "SYS-001",
+            "type": "system requirement"
+          },
+          {
+            "id": "SWR-001",
+            "type": "software requirement"
+          },
+          {
+            "id": "TC-001",
+            "type": "test case"
+          }
+        ]
+      ],
+      "engineeringContent": "Verify obstacle detection at 2 meters."
+    },
+    {
+      "artifactId": "SYS-002",
+      "artifactType": "system_requirement",
+      "impactTier": "low",
+      "llmLabel": "NO_IMPACT",
+      "confidence": 0.95,
+      "traceability": "linked",
+      "traceabilityPaths": [
+        [
+          {
+            "id": "SR-001",
+            "type": "stakeholder requirement"
+          },
+          {
+            "id": "SYS-002",
+            "type": "system requirement"
+          }
+        ]
+      ],
+      "engineeringContent": "The obstacle detection system shall publish obstacle distance measurements to the vehicle controller."
+    },
+    {
+      "artifactId": "SYS-022",
+      "artifactType": "system_requirement",
+      "impactTier": "low",
+      "llmLabel": "NO_IMPACT",
+      "confidence": 0.95,
+      "traceability": "linked",
+      "traceabilityPaths": [
+        [
+          {
+            "id": "SR-001",
+            "type": "stakeholder requirement"
+          },
+          {
+            "id": "SYS-022",
+            "type": "system requirement"
+          }
+        ]
+      ],
+      "engineeringContent": "The obstacle detection system shall reject obstacle measurements with invalid sensor quality flags."
+    },
+    {
+      "artifactId": "SYS-021",
+      "artifactType": "system_requirement",
+      "impactTier": "low",
+      "llmLabel": "NO_IMPACT",
+      "confidence": 0.95,
+      "traceability": "linked",
+      "traceabilityPaths": [
+        [
+          {
+            "id": "SR-001",
+            "type": "stakeholder requirement"
+          },
+          {
+            "id": "SYS-021",
+            "type": "system requirement"
+          }
+        ]
+      ],
+      "engineeringContent": "The obstacle detection system shall process sensor measurements at 20 Hz."
+    },
+    {
+      "artifactId": "TC-002",
+      "artifactType": "test_case",
+      "impactTier": "high",
+      "llmLabel": "DIRECT",
+      "confidence": 0.95,
+      "traceability": "linked",
+      "traceabilityPaths": [
+        [
+          {
+            "id": "SR-001",
+            "type": "stakeholder requirement"
+          },
+          {
+            "id": "SYS-001",
+            "type": "system requirement"
+          },
+          {
+            "id": "SWR-001",
+            "type": "software requirement"
+          },
+          {
+            "id": "TC-002",
+            "type": "test case"
+          }
+        ]
+      ],
+      "engineeringContent": "Verify obstacles beyond the configured detection range are not classified as detected."
+    },
+    {
+      "artifactId": "SWR-002",
+      "artifactType": "software_requirement",
+      "impactTier": "low",
+      "llmLabel": "NO_IMPACT",
+      "confidence": 0.95,
+      "traceability": "linked",
+      "traceabilityPaths": [
+        [
+          {
+            "id": "SR-001",
+            "type": "stakeholder requirement"
+          },
+          {
+            "id": "SYS-002",
+            "type": "system requirement"
+          },
+          {
+            "id": "SWR-002",
+            "type": "software requirement"
+          }
+        ]
+      ],
+      "engineeringContent": "The obstacle processing task shall publish obstacle distance measurements."
+    },
+    {
+      "artifactId": "SYS-007",
+      "artifactType": "system_requirement",
+      "impactTier": "low",
+      "llmLabel": "NO_IMPACT",
+      "confidence": 0.95,
+      "traceability": "graph_unlinked",
+      "traceabilityPaths": [],
+      "engineeringContent": "The parking assistance system shall detect obstacles at distances up to 1.5 meters."
+    },
+    {
+      "artifactId": "COMP-002",
+      "artifactType": "component",
+      "impactTier": "low",
+      "llmLabel": "NO_IMPACT",
+      "confidence": 0.95,
+      "traceability": "linked",
+      "traceabilityPaths": [
+        [
+          {
+            "id": "SR-001",
+            "type": "stakeholder requirement"
+          },
+          {
+            "id": "SYS-002",
+            "type": "system requirement"
+          },
+          {
+            "id": "SWR-002",
+            "type": "software requirement"
+          },
+          {
+            "id": "COMP-002",
+            "type": "component"
+          }
+        ]
+      ],
+      "engineeringContent": "Publishes obstacle distance measurements."
+    }
+  ]
+}
