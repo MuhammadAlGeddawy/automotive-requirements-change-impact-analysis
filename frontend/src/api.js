@@ -1,4 +1,6 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || ''
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL ||
+  (import.meta.env.PROD ? '/svc/api' : '')
 const ANALYSIS_TIMEOUT_MS = 30 * 1000
 
 async function request(path, options = {}) {
@@ -20,7 +22,7 @@ async function request(path, options = {}) {
       body = responseText ? JSON.parse(responseText) : {}
     } catch {
       throw new Error(
-        `API returned a non-JSON response (status ${response.status}). Check the API port and restart Vite.`,
+        `API returned a non-JSON response (status ${response.status}). Check the deployed API service route.`,
       )
     }
     if (!response.ok) {
@@ -34,7 +36,7 @@ async function request(path, options = {}) {
       )
     }
     if (error instanceof TypeError) {
-      throw new Error(`Cannot reach the API at ${API_BASE_URL}. Start the FastAPI server first.`)
+      throw new Error(`Cannot reach the API at ${API_BASE_URL || 'the local proxy'}.`)
     }
     throw error
   } finally {

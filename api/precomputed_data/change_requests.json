@@ -1,0 +1,52 @@
+[
+  {
+    "id": "CR-001",
+    "requirementId": "SR-001",
+    "changeType": "parameter_change",
+    "description": "Customer increased obstacle detection range.",
+    "oldText": "The vehicle shall detect obstacles within 2 meters.",
+    "newText": "The vehicle shall detect obstacles within 3 meters.",
+    "changedValueOld": "2 meters",
+    "changedValueNew": "3 meters"
+  },
+  {
+    "id": "CR-002",
+    "requirementId": "SR-002",
+    "changeType": "threshold_change",
+    "description": "New lighting specification requires activation at lower ambient light.",
+    "oldText": "The vehicle shall automatically activate the headlights when ambient light is below 100 lux.",
+    "newText": "The vehicle shall automatically activate the headlights when ambient light is below 80 lux.",
+    "changedValueOld": "100 lux",
+    "changedValueNew": "80 lux"
+  },
+  {
+    "id": "CR-003",
+    "requirementId": "SR-005",
+    "changeType": "timing_constraint_change",
+    "description": "Driver warning response time tightened.",
+    "oldText": "The driver warning function shall issue an audible warning within 200 milliseconds of a confirmed hazard.",
+    "newText": "The driver warning function shall issue an audible warning within 100 milliseconds of a confirmed hazard.",
+    "changedValueOld": "200 milliseconds",
+    "changedValueNew": "100 milliseconds"
+  },
+  {
+    "id": "CR-004",
+    "requirementId": "SR-008",
+    "changeType": "threshold_change",
+    "description": "Battery diagnostic sensitivity increased.",
+    "oldText": "The battery monitoring function shall detect cell voltage deviations greater than 50 mV.",
+    "newText": "The battery monitoring function shall detect cell voltage deviations greater than 30 mV.",
+    "changedValueOld": "50 mV",
+    "changedValueNew": "30 mV"
+  },
+  {
+    "id": "CR-005",
+    "requirementId": "SR-009",
+    "changeType": "timing_constraint_change",
+    "description": "Door event response time tightened.",
+    "oldText": "The vehicle shall detect an open door within 100 milliseconds.",
+    "newText": "The vehicle shall detect an open door within 50 milliseconds.",
+    "changedValueOld": "100 milliseconds",
+    "changedValueNew": "50 milliseconds"
+  }
+]

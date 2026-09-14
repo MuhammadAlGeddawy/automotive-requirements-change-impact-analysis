@@ -7,7 +7,12 @@ from pathlib import Path
 from fastapi import FastAPI, HTTPException
 
 
-DATA_DIR = Path(__file__).resolve().parent.parent / "precomputed_data"
+SERVICE_DATA_DIR = Path(__file__).resolve().parent / "precomputed_data"
+DATA_DIR = (
+    SERVICE_DATA_DIR
+    if SERVICE_DATA_DIR.exists()
+    else Path(__file__).resolve().parent.parent / "precomputed_data"
+)
 app = FastAPI(title="NASAQ Precomputed Demo API")
 
 
@@ -34,6 +39,7 @@ def health() -> dict[str, str]:
 
 @app.get("/change-requests")
 @app.get("/api/change-requests")
+@app.get("/svc/api/change-requests")
 def change_requests():
     if not _precomputed_enabled():
         raise HTTPException(status_code=503, detail="Precomputed demo mode is disabled.")
@@ -42,6 +48,7 @@ def change_requests():
 
 @app.post("/analyze/{change_id}")
 @app.post("/api/analyze/{change_id}")
+@app.post("/svc/api/analyze/{change_id}")
 def analyze(change_id: str):
     if not _precomputed_enabled():
         raise HTTPException(status_code=503, detail="Precomputed demo mode is disabled.")

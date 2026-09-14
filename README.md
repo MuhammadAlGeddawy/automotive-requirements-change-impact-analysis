@@ -132,6 +132,11 @@ set this before starting Vite:
 $env:VITE_API_PROXY_TARGET = "http://127.0.0.1:8765"
 ```
 
+In a production Vercel build, the frontend automatically uses the same-origin
+`/svc/api/change-requests` and `/svc/api/analyze/{change_id}` service routes.
+`vercel.json` exposes the `frontend` and FastAPI `backend` services and routes
+`/svc/api/*` to the backend without hardcoding a deployment domain.
+
 ### Retrieval mode
 
 The free deployment keeps model-heavy retrieval inside the Render backend.
