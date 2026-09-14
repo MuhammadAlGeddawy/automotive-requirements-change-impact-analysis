@@ -16,7 +16,7 @@
   },
   "rewrites": [
     {
-      "source": "/svc/api/(.*)",
+      "source": "/api/(.*)",
       "destination": {
         "service": "backend"
       }
