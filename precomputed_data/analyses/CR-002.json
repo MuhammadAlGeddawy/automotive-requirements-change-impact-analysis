@@ -1,0 +1,292 @@
+{
+  "changeId": "CR-002",
+  "requirementId": "SR-002",
+  "highImpact": 3,
+  "mediumImpact": 2,
+  "lowImpact": 5,
+  "totalAffected": 10,
+  "impactChain": [
+    {
+      "id": "SR-002",
+      "type": "stakeholder requirement"
+    },
+    {
+      "id": "SYS-004",
+      "type": "system requirement"
+    }
+  ],
+  "artifacts": [
+    {
+      "artifactId": "SYS-004",
+      "artifactType": "system_requirement",
+      "impactTier": "high",
+      "llmLabel": "DIRECT",
+      "confidence": 0.95,
+      "traceability": "linked",
+      "traceabilityPaths": [
+        [
+          {
+            "id": "SR-002",
+            "type": "stakeholder requirement"
+          },
+          {
+            "id": "SYS-004",
+            "type": "system requirement"
+          }
+        ]
+      ],
+      "engineeringContent": "The lighting controller shall activate the headlights when ambient light is below 100 lux."
+    },
+    {
+      "artifactId": "TC-004",
+      "artifactType": "test_case",
+      "impactTier": "high",
+      "llmLabel": "DIRECT",
+      "confidence": 0.95,
+      "traceability": "linked",
+      "traceabilityPaths": [
+        [
+          {
+            "id": "SR-002",
+            "type": "stakeholder requirement"
+          },
+          {
+            "id": "SYS-004",
+            "type": "system requirement"
+          },
+          {
+            "id": "SWR-004",
+            "type": "software requirement"
+          },
+          {
+            "id": "TC-004",
+            "type": "test case"
+          }
+        ]
+      ],
+      "engineeringContent": "Verify headlights activate below 100 lux."
+    },
+    {
+      "artifactId": "SWR-004",
+      "artifactType": "software_requirement",
+      "impactTier": "high",
+      "llmLabel": "DIRECT",
+      "confidence": 0.95,
+      "traceability": "linked",
+      "traceabilityPaths": [
+        [
+          {
+            "id": "SR-002",
+            "type": "stakeholder requirement"
+          },
+          {
+            "id": "SYS-004",
+            "type": "system requirement"
+          },
+          {
+            "id": "SWR-004",
+            "type": "software requirement"
+          }
+        ]
+      ],
+      "engineeringContent": "The headlight controller shall enable the headlight output when filtered lux < 100."
+    },
+    {
+      "artifactId": "SWR-003",
+      "artifactType": "software_requirement",
+      "impactTier": "medium",
+      "llmLabel": "POTENTIAL",
+      "confidence": 0.8,
+      "traceability": "linked",
+      "traceabilityPaths": [
+        [
+          {
+            "id": "SR-002",
+            "type": "stakeholder requirement"
+          },
+          {
+            "id": "SYS-003",
+            "type": "system requirement"
+          },
+          {
+            "id": "SWR-003",
+            "type": "software requirement"
+          }
+        ]
+      ],
+      "engineeringContent": "The ambient-light task shall calculate filtered lux values."
+    },
+    {
+      "artifactId": "SWR-023",
+      "artifactType": "software_requirement",
+      "impactTier": "low",
+      "llmLabel": "NO_IMPACT",
+      "confidence": 0.2,
+      "traceability": "linked",
+      "traceabilityPaths": [
+        [
+          {
+            "id": "SR-002",
+            "type": "stakeholder requirement"
+          },
+          {
+            "id": "SYS-023",
+            "type": "system requirement"
+          },
+          {
+            "id": "SWR-023",
+            "type": "software requirement"
+          }
+        ]
+      ],
+      "engineeringContent": "The ambient-light task shall execute at least every 100 milliseconds."
+    },
+    {
+      "artifactId": "COMP-003",
+      "artifactType": "component",
+      "impactTier": "medium",
+      "llmLabel": "POTENTIAL",
+      "confidence": 0.8,
+      "traceability": "linked",
+      "traceabilityPaths": [
+        [
+          {
+            "id": "SR-002",
+            "type": "stakeholder requirement"
+          },
+          {
+            "id": "SYS-003",
+            "type": "system requirement"
+          },
+          {
+            "id": "SWR-003",
+            "type": "software requirement"
+          },
+          {
+            "id": "COMP-003",
+            "type": "component"
+          }
+        ],
+        [
+          {
+            "id": "SR-002",
+            "type": "stakeholder requirement"
+          },
+          {
+            "id": "SYS-023",
+            "type": "system requirement"
+          },
+          {
+            "id": "SWR-023",
+            "type": "software requirement"
+          },
+          {
+            "id": "COMP-003",
+            "type": "component"
+          }
+        ]
+      ],
+      "engineeringContent": "Filters ambient light and controls headlight activation."
+    },
+    {
+      "artifactId": "SYS-023",
+      "artifactType": "system_requirement",
+      "impactTier": "low",
+      "llmLabel": "NO_IMPACT",
+      "confidence": 0.2,
+      "traceability": "linked",
+      "traceabilityPaths": [
+        [
+          {
+            "id": "SR-002",
+            "type": "stakeholder requirement"
+          },
+          {
+            "id": "SYS-023",
+            "type": "system requirement"
+          }
+        ]
+      ],
+      "engineeringContent": "The lighting controller shall sample ambient light at least every 100 milliseconds."
+    },
+    {
+      "artifactId": "TC-003",
+      "artifactType": "test_case",
+      "impactTier": "low",
+      "llmLabel": "NO_IMPACT",
+      "confidence": 0.2,
+      "traceability": "linked",
+      "traceabilityPaths": [
+        [
+          {
+            "id": "SR-002",
+            "type": "stakeholder requirement"
+          },
+          {
+            "id": "SYS-003",
+            "type": "system requirement"
+          },
+          {
+            "id": "SWR-003",
+            "type": "software requirement"
+          },
+          {
+            "id": "TC-003",
+            "type": "test case"
+          }
+        ]
+      ],
+      "engineeringContent": "Verify ambient light is correctly converted to filtered lux."
+    },
+    {
+      "artifactId": "SYS-003",
+      "artifactType": "system_requirement",
+      "impactTier": "low",
+      "llmLabel": "NO_IMPACT",
+      "confidence": 0.2,
+      "traceability": "linked",
+      "traceabilityPaths": [
+        [
+          {
+            "id": "SR-002",
+            "type": "stakeholder requirement"
+          },
+          {
+            "id": "SYS-003",
+            "type": "system requirement"
+          }
+        ]
+      ],
+      "engineeringContent": "The lighting controller shall measure ambient light intensity."
+    },
+    {
+      "artifactId": "TC-015",
+      "artifactType": "test_case",
+      "impactTier": "low",
+      "llmLabel": "NO_IMPACT",
+      "confidence": 0.2,
+      "traceability": "linked",
+      "traceabilityPaths": [
+        [
+          {
+            "id": "SR-002",
+            "type": "stakeholder requirement"
+          },
+          {
+            "id": "SYS-023",
+            "type": "system requirement"
+          },
+          {
+            "id": "SWR-023",
+            "type": "software requirement"
+          },
+          {
+            "id": "TC-015",
+            "type": "test case"
+          }
+        ]
+      ],
+      "engineeringContent": "Verify ambient-light processing executes at least every 100 milliseconds."
+    }
+  ]
+}

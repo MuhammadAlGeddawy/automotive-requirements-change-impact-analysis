@@ -10,6 +10,7 @@ function AppShell() {
   const [changeRequests, setChangeRequests] = useState([])
   const [selectedId, setSelectedId] = useState('')
   const [requestError, setRequestError] = useState('')
+  const [analysisStep, setAnalysisStep] = useState(1)
 
   useEffect(() => {
     fetchChangeRequests()
@@ -24,6 +25,11 @@ function AppShell() {
 
   const selectedRequest = changeRequests.find((request) => request.id === selectedId)
 
+  const handleSelect = (id) => {
+    setSelectedId(id)
+    setAnalysisStep(1)
+  }
+
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-bg-cream">
       <GradientMesh />
@@ -32,7 +38,7 @@ function AppShell() {
         <Sidebar
           requests={changeRequests}
           selectedId={selectedId}
-          onSelect={setSelectedId}
+          onSelect={handleSelect}
         />
 
         <main className="min-w-0 flex-1">
@@ -44,12 +50,13 @@ function AppShell() {
               </p>
             ) : selectedRequest ? (
               <>
-                <Stepper currentStep={1} />
+                <Stepper currentStep={analysisStep} />
                 <ComparisonCards request={selectedRequest} />
                 <ImpactAnalysis
                   key={selectedId}
                   changeId={selectedId}
                   hasSelection
+                  onStepChange={setAnalysisStep}
                 />
               </>
             ) : (

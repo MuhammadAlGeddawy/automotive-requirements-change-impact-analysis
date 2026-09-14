@@ -104,12 +104,136 @@ starting the backend may take longer while the embedding model, FAISS index,
 and reranker load. These resources are cached and reused for later analyses in
 the same backend process.
 
+To run the exact precomputed Vercel behavior locally, start the lightweight
+API instead:
+
+```powershell
+.\start-precomputed-api.ps1
+```
+
+Do not use `python -m uvicorn api:app` for this mode; that starts the live
+pipeline and loads the embedding and reranker models.
+
+In a second terminal, start Vite with its proxy pointed at that API:
+
+```powershell
+cd frontend
+$env:VITE_API_PROXY_TARGET = "http://127.0.0.1:8766"
+npm run dev
+```
+
+This local mode reads the checked-in `precomputed_data/` JSON files for
+`/api/change-requests` and `/api/analyze/{change_id}`. It does not load
+PyTorch, Sentence Transformers, FAISS, or call OpenRouter. The default Vite proxy target is now port `8766`, so the local frontend uses
+the precomputed demo by default. To use the full live pipeline on port `8765`,
+set this before starting Vite:
+
+```powershell
+$env:VITE_API_PROXY_TARGET = "http://127.0.0.1:8765"
+```
+
+In a production Vercel build, the frontend automatically uses the same-origin
+`/svc/api/change-requests` and `/svc/api/analyze/{change_id}` service routes.
+`vercel.json` exposes the `frontend` and FastAPI `backend` services and routes
+`/svc/api/*` to the backend without hardcoding a deployment domain.
+
+### Retrieval mode
+
+The free deployment keeps model-heavy retrieval inside the Render backend.
+This is the active and tested production path:
+
+```dotenv
+RETRIEVER_MODE=local
+```
+
+Render loads and caches the embedding model, FAISS index, and Cross-Encoder in
+the API process. The first analysis after a cold start can be slow, and the
+free service may sleep after inactivity. Do not set `RETRIEVER_MODE=remote` for
+the free deployment.
+
+To avoid loading ML models in a memory-constrained deployment, build the
+offline cache on a development machine and include it in the Render image:
+
+```powershell
+python scripts/build_retrieval_cache.py --output retrieval_cache
+```
+
+Then set:
+
+```dotenv
+RETRIEVAL_CACHE_DIR=./retrieval_cache
+```
+
+The cache contains normalized artifact embeddings, the five known change-query
+embeddings, and reranker scores for each known change request's graph-plus-
+semantic candidate union. It is copied into the Render image by the root
+`Dockerfile`. Runtime requests perform only FAISS similarity search, score
+lookup, graph/hybrid processing, and LLM reasoning. Regenerate and commit the
+cache whenever the dataset or retrieval model revisions change. Unknown
+change IDs require a fresh cache or the normal uncached local mode.
+
+The repository also contains an isolated `hf-retrieval-service/` prototype for
+a future container-capable host. It is not required by the current website
+deployment and should not receive OpenRouter credentials.
+
+If a suitable container host is available later, remote mode can be enabled
+only after behavioral parity testing:
+
+```dotenv
+RETRIEVER_MODE=remote
+RETRIEVAL_SERVICE_URL=https://<space>.hf.space
+RETRIEVAL_SERVICE_TOKEN=<shared-secret>
+```
+
+The remote request includes both the semantic query and Render's graph
+candidate IDs, preserving the current candidate-union behavior.
+
 ## Free website deployment
 
-NASAQ is deployed as two public services: Vercel serves the static React
-website, while Render runs the FastAPI analysis API. This keeps the OpenRouter
-credential and the ML pipeline on the server instead of exposing either in
-browser code.
+NASAQ can run as one Vercel deployment: Vercel serves the static React
+website and the lightweight `/api` function reads checked-in precomputed demo
+JSON. No ML model, FAISS index, or OpenRouter credential is loaded at request
+time.
+
+### Build the Vercel demo data
+
+Run preprocessing from a machine with the Python analysis dependencies and a
+valid `OPENROUTER_API_KEY`:
+
+```powershell
+python scripts/precompute_demo.py --output precomputed_data
+```
+
+The command runs the existing retrieval, reranking, hybrid scoring, and
+OpenRouter assessment once for CR-001 through CR-005. It writes:
+
+- `precomputed_data/analyses/CR-xxx.json`: final frontend-compatible results
+- `precomputed_data/change_requests.json`: selector metadata
+- `precomputed_data/traceability_graph.json`: graph snapshot
+- `precomputed_data/retrieval_cache/`: embeddings, FAISS-compatible vectors,
+  query embeddings, and reranker scores
+- `precomputed_data/manifest.json`: generated IDs and mode
+
+Do not use `--skip-llm` for production data; that option is only for local
+retrieval-only validation. The generated files must be committed because
+Vercel functions have no persistent model/data build step.
+
+### Deploy the precomputed demo to Vercel
+
+1. Run the preprocessing command and verify that all five analysis JSON files
+   exist.
+2. Commit and push `precomputed_data/` together with the Vercel API files.
+3. Import the repository into Vercel with the repository root as the project
+   root. `vercel.json` builds `frontend/` and Vercel detects `api/index.py`.
+4. Deploy and open the Vercel URL. The frontend calls same-origin
+   `/api/change-requests` and `/api/analyze/{change_id}`.
+
+Set `NASAQ_DEMO_MODE=precomputed` in Vercel if you want to make the mode
+explicit. The default is already precomputed. No `OPENROUTER_API_KEY` should
+be configured in Vercel.
+
+The live Render/FastAPI pipeline remains available for development and
+regenerating demo data, but it is not required by the deployed Vercel demo.
 
 ### 1. Deploy the API to Render
 

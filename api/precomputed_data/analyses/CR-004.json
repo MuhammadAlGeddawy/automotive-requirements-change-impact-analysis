@@ -1,0 +1,291 @@
+{
+  "changeId": "CR-004",
+  "requirementId": "SR-008",
+  "highImpact": 3,
+  "mediumImpact": 2,
+  "lowImpact": 5,
+  "totalAffected": 10,
+  "impactChain": [
+    {
+      "id": "SR-008",
+      "type": "stakeholder requirement"
+    },
+    {
+      "id": "SYS-016",
+      "type": "system requirement"
+    }
+  ],
+  "artifacts": [
+    {
+      "artifactId": "SYS-016",
+      "artifactType": "system_requirement",
+      "impactTier": "high",
+      "llmLabel": "DIRECT",
+      "confidence": 0.95,
+      "traceability": "linked",
+      "traceabilityPaths": [
+        [
+          {
+            "id": "SR-008",
+            "type": "stakeholder requirement"
+          },
+          {
+            "id": "SYS-016",
+            "type": "system requirement"
+          }
+        ]
+      ],
+      "engineeringContent": "The battery monitor shall report a cell voltage deviation when the difference exceeds 50 mV."
+    },
+    {
+      "artifactId": "SWR-015",
+      "artifactType": "software_requirement",
+      "impactTier": "medium",
+      "llmLabel": "POTENTIAL",
+      "confidence": 0.85,
+      "traceability": "linked",
+      "traceabilityPaths": [
+        [
+          {
+            "id": "SR-008",
+            "type": "stakeholder requirement"
+          },
+          {
+            "id": "SYS-015",
+            "type": "system requirement"
+          },
+          {
+            "id": "SWR-015",
+            "type": "software requirement"
+          }
+        ]
+      ],
+      "engineeringContent": "The battery monitor shall calculate voltage deviation across cells."
+    },
+    {
+      "artifactId": "SWR-016",
+      "artifactType": "software_requirement",
+      "impactTier": "high",
+      "llmLabel": "DIRECT",
+      "confidence": 0.92,
+      "traceability": "linked",
+      "traceabilityPaths": [
+        [
+          {
+            "id": "SR-008",
+            "type": "stakeholder requirement"
+          },
+          {
+            "id": "SYS-016",
+            "type": "system requirement"
+          },
+          {
+            "id": "SWR-016",
+            "type": "software requirement"
+          }
+        ]
+      ],
+      "engineeringContent": "The battery diagnostic task shall report deviation when it exceeds 50 mV."
+    },
+    {
+      "artifactId": "SYS-015",
+      "artifactType": "system_requirement",
+      "impactTier": "low",
+      "llmLabel": "NO_IMPACT",
+      "confidence": 0.9,
+      "traceability": "linked",
+      "traceabilityPaths": [
+        [
+          {
+            "id": "SR-008",
+            "type": "stakeholder requirement"
+          },
+          {
+            "id": "SYS-015",
+            "type": "system requirement"
+          }
+        ]
+      ],
+      "engineeringContent": "The battery monitor shall measure individual cell voltages."
+    },
+    {
+      "artifactId": "SYS-028",
+      "artifactType": "system_requirement",
+      "impactTier": "low",
+      "llmLabel": "NO_IMPACT",
+      "confidence": 0.9,
+      "traceability": "linked",
+      "traceabilityPaths": [
+        [
+          {
+            "id": "SR-008",
+            "type": "stakeholder requirement"
+          },
+          {
+            "id": "SYS-028",
+            "type": "system requirement"
+          }
+        ]
+      ],
+      "engineeringContent": "The battery monitor shall sample cell voltage at least every 100 milliseconds."
+    },
+    {
+      "artifactId": "TC-010",
+      "artifactType": "test_case",
+      "impactTier": "high",
+      "llmLabel": "DIRECT",
+      "confidence": 0.94,
+      "traceability": "linked",
+      "traceabilityPaths": [
+        [
+          {
+            "id": "SR-008",
+            "type": "stakeholder requirement"
+          },
+          {
+            "id": "SYS-016",
+            "type": "system requirement"
+          },
+          {
+            "id": "SWR-016",
+            "type": "software requirement"
+          },
+          {
+            "id": "TC-010",
+            "type": "test case"
+          }
+        ]
+      ],
+      "engineeringContent": "Verify cell voltage deviation above 50 mV is reported."
+    },
+    {
+      "artifactId": "COMP-012",
+      "artifactType": "component",
+      "impactTier": "medium",
+      "llmLabel": "POTENTIAL",
+      "confidence": 0.8,
+      "traceability": "linked",
+      "traceabilityPaths": [
+        [
+          {
+            "id": "SR-008",
+            "type": "stakeholder requirement"
+          },
+          {
+            "id": "SYS-015",
+            "type": "system requirement"
+          },
+          {
+            "id": "SWR-015",
+            "type": "software requirement"
+          },
+          {
+            "id": "COMP-012",
+            "type": "component"
+          }
+        ],
+        [
+          {
+            "id": "SR-008",
+            "type": "stakeholder requirement"
+          },
+          {
+            "id": "SYS-016",
+            "type": "system requirement"
+          },
+          {
+            "id": "SWR-016",
+            "type": "software requirement"
+          },
+          {
+            "id": "COMP-012",
+            "type": "component"
+          }
+        ],
+        [
+          {
+            "id": "SR-008",
+            "type": "stakeholder requirement"
+          },
+          {
+            "id": "SYS-028",
+            "type": "system requirement"
+          },
+          {
+            "id": "SWR-028",
+            "type": "software requirement"
+          },
+          {
+            "id": "COMP-012",
+            "type": "component"
+          }
+        ]
+      ],
+      "engineeringContent": "Monitors individual cell voltages."
+    },
+    {
+      "artifactId": "SWR-028",
+      "artifactType": "software_requirement",
+      "impactTier": "low",
+      "llmLabel": "NO_IMPACT",
+      "confidence": 0.9,
+      "traceability": "linked",
+      "traceabilityPaths": [
+        [
+          {
+            "id": "SR-008",
+            "type": "stakeholder requirement"
+          },
+          {
+            "id": "SYS-028",
+            "type": "system requirement"
+          },
+          {
+            "id": "SWR-028",
+            "type": "software requirement"
+          }
+        ]
+      ],
+      "engineeringContent": "The battery sampling task shall execute every 100 milliseconds."
+    },
+    {
+      "artifactId": "TC-017",
+      "artifactType": "test_case",
+      "impactTier": "low",
+      "llmLabel": "NO_IMPACT",
+      "confidence": 0.9,
+      "traceability": "linked",
+      "traceabilityPaths": [
+        [
+          {
+            "id": "SR-008",
+            "type": "stakeholder requirement"
+          },
+          {
+            "id": "SYS-028",
+            "type": "system requirement"
+          },
+          {
+            "id": "SWR-028",
+            "type": "software requirement"
+          },
+          {
+            "id": "TC-017",
+            "type": "test case"
+          }
+        ]
+      ],
+      "engineeringContent": "Verify battery sampling executes every 100 milliseconds."
+    },
+    {
+      "artifactId": "SYS-030",
+      "artifactType": "system_requirement",
+      "impactTier": "low",
+      "llmLabel": "NO_IMPACT",
+      "confidence": 0.95,
+      "traceability": "graph_unlinked",
+      "traceabilityPaths": [],
+      "engineeringContent": "The lane monitoring system shall update lane position at least every 50 milliseconds."
+    }
+  ]
+}

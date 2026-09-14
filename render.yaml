@@ -6,6 +6,10 @@ services:
     dockerfilePath: ./Dockerfile
     healthCheckPath: /health
     envVars:
+      - key: RETRIEVER_MODE
+        value: local
+      - key: RETRIEVAL_CACHE_DIR
+        value: ./retrieval_cache
       - key: OPENROUTER_API_KEY
         sync: false
       - key: ALLOWED_ORIGINS
