@@ -2,7 +2,6 @@
 
 from dataclasses import dataclass
 from functools import lru_cache
-import os
 from pathlib import Path
 from typing import Optional
 
@@ -13,7 +12,7 @@ from sklearn.preprocessing import MinMaxScaler
 
 from src.data_loader import build_graph, get_artifact_records, load_data
 from src.llm_assessment import ImpactAnalysisResponse, assess_impact, create_llm_client
-from src.remote_retrieval import RemoteRetrievalError, RemoteRetriever
+from src.retrieval import RetrievalEngine
 
 from openai import OpenAI, OpenAIError
 from openai import (
@@ -41,36 +40,19 @@ class AnalysisResult:
 
 
 @lru_cache(maxsize=4)
-def _get_pipeline_resources(data_dir_key: str, mode: Optional[str] = None):
+def _get_pipeline_resources(data_dir_key: str):
     """Load the dataset and build retrieval resources once per API process."""
     data_dir = Path(data_dir_key) if data_dir_key else None
     data = load_data(data_dir)
     graph = build_graph(data)
-    engine = None
-    mode = mode or _retriever_mode()
-    if mode == "local":
-        from src.retrieval import RetrievalEngine
-
-        cache_dir = os.getenv("RETRIEVAL_CACHE_DIR", "").strip()
-        if cache_dir and Path(cache_dir).is_dir():
-            engine = RetrievalEngine.from_cache(cache_dir)
-        else:
-            engine = RetrievalEngine()
-            engine.build_index(get_artifact_records(data))
+    engine = RetrievalEngine()
+    engine.build_index(get_artifact_records(data))
     return data, graph, engine
 
 
 def clear_pipeline_cache() -> None:
     """Clear cached models and indexes, primarily for development or data refreshes."""
     _get_pipeline_resources.cache_clear()
-
-
-def _retriever_mode() -> str:
-    return os.getenv("RETRIEVER_MODE", "local").strip().lower()
-
-
-def _get_remote_retriever() -> RemoteRetriever:
-    return RemoteRetriever.from_environment()
 
 
 def _get_downstream_nodes(graph: nx.DiGraph, start_node: str) -> list[str]:
@@ -128,10 +110,7 @@ def analyze_change(
     """
     # Reuse the loaded dataset, embedding model, FAISS index, and reranker.
     data_dir_key = str(Path(data_dir).resolve()) if data_dir else ""
-    mode = _retriever_mode()
-    if mode not in {"local", "remote"}:
-        raise ValueError(f"Unsupported RETRIEVER_MODE: {mode}")
-    data, graph, engine = _get_pipeline_resources(data_dir_key, mode)
+    data, graph, engine = _get_pipeline_resources(data_dir_key)
 
     # Get change request
     changes_df = data["changes"]
@@ -176,69 +155,18 @@ Reason:
 Find engineering artifacts that may be affected by this change.
 """.strip()
 
+    # Semantic retrieval
+    retrieved = engine.semantic_retrieve(change_query, top_k=top_k_retrieval)
+
     # Graph candidates
     graph_candidates = _get_downstream_nodes(graph, requirement_id)
-
-    rerank_query = f"""
-A stakeholder requirement changed.
-
-OLD:
-{old_text}
-
-NEW:
-{new_text}
-
-Change type:
-{change_type}
-
-Determine whether the engineering artifact below is relevant
-to assessing the impact of this change.
-""".strip()
-
-    if mode == "remote":
-        try:
-            retrieved = _get_remote_retriever().retrieve_and_rerank(
-                semantic_query=change_query,
-                rerank_query=rerank_query,
-                semantic_top_k=top_k_retrieval,
-                rerank_artifact_ids=graph_candidates,
-            )
-        except RemoteRetrievalError as error:
-            return AnalysisResult(
-                change_id=change_id,
-                requirement_id=requirement_id,
-                old_text=old_text,
-                new_text=new_text,
-                change_type=change_type,
-                reason=reason,
-                candidates=pd.DataFrame(),
-                ranked_candidates=pd.DataFrame(),
-                error=f"Remote retrieval unavailable: {error}",
-            )
-    else:
-        if engine is None:
-            raise RuntimeError("Local retrieval engine was not initialized.")
-        query_key = change_id if engine._precomputed else None
-        retrieved = engine.semantic_retrieve(
-            change_query, top_k=top_k_retrieval, query_key=query_key
-        )
 
     # Combine candidates (preserve order, deduplicate)
     retrieval_candidates = retrieved["id"].tolist()
     candidate_ids = list(dict.fromkeys(graph_candidates + retrieval_candidates))
 
     # Build candidate records with metadata
-    similarity_column = (
-        "semantic_similarity"
-        if "semantic_similarity" in retrieved
-        else "similarity"
-    )
-    retrieval_scores = dict(zip(retrieved["id"], retrieved[similarity_column]))
-    reranker_scores = (
-        dict(zip(retrieved["id"], retrieved["reranker_score"]))
-        if "reranker_score" in retrieved
-        else {}
-    )
+    retrieval_scores = dict(zip(retrieved["id"], retrieved["similarity"]))
 
     candidate_records = []
     for artifact_id in candidate_ids:
@@ -265,7 +193,6 @@ to assessing the impact of this change.
             "type": node_data.get("type"),
             "text": node_data.get("text", node_data.get("name", "")),
             "semantic_similarity": retrieval_scores.get(artifact_id, np.nan),
-            "reranker_score": reranker_scores.get(artifact_id, np.nan),
             "graph_linked": current_graph_linked,
             "graph_distance": current_graph_distance,
             "paths": paths,
@@ -274,12 +201,24 @@ to assessing the impact of this change.
 
     candidate_df = pd.DataFrame(candidate_records)
 
-    if mode == "local":
-        if engine is None:
-            raise RuntimeError("Local retrieval engine was not initialized.")
-        candidate_df["reranker_score"] = engine.rerank(
-            rerank_query, candidate_df, query_key=query_key
-        )
+    # Rerank with cross-encoder
+    rerank_query = f"""
+A stakeholder requirement changed.
+
+OLD:
+{old_text}
+
+NEW:
+{new_text}
+
+Change type:
+{change_type}
+
+Determine whether the engineering artifact below is relevant
+to assessing the impact of this change.
+""".strip()
+
+    candidate_df["reranker_score"] = engine.rerank(rerank_query, candidate_df)
 
     # Normalize scores for hybrid ranking
     semantic_scaler = MinMaxScaler()

@@ -53,12 +53,7 @@ Rules:
 - Do not use semantic similarity alone.
 - Do not invent relationships.
 - Consider the OLD and NEW requirements.
-- Return exactly one result for every candidate, in the same order as the
-  candidate artifacts.
-- Copy every candidate artifact_id exactly as provided; do not add punctuation,
-  suffixes, or other characters to IDs.
-- The number of assessments must exactly equal the number of candidate
-  artifacts.
+- Return exactly one result for every candidate.
 - Do NOT provide reasoning or analysis outside the JSON.
 - Keep the reason to ONE short sentence.
 - Keep evidence to ONE short sentence.
@@ -274,16 +269,5 @@ def assess_impact(
 
     raw_output = response.choices[0].message.content
     parsed_output = _extract_json(raw_output)
-    assessment = ImpactAnalysisResponse.model_validate(parsed_output)
-    expected_ids = [str(value) for value in ranked_candidates["id"].tolist()]
-    actual_ids = [item.artifact_id for item in assessment.assessments]
-    if len(actual_ids) != len(set(actual_ids)):
-        raise ValueError("LLM returned duplicate artifact assessments.")
-    if set(actual_ids) != set(expected_ids):
-        missing = sorted(set(expected_ids) - set(actual_ids))
-        unexpected = sorted(set(actual_ids) - set(expected_ids))
-        raise ValueError(
-            "LLM assessment coverage mismatch: "
-            f"missing={missing}, unexpected={unexpected}"
-        )
-    return assessment
+
+    return ImpactAnalysisResponse.model_validate(parsed_output)

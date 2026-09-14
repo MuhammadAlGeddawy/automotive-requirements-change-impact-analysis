@@ -12,7 +12,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY api.py .
 COPY src ./src
 COPY dataset ./dataset
-COPY retrieval_cache ./retrieval_cache
 
 EXPOSE 8765
 

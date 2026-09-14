@@ -1,7 +1,5 @@
-const API_BASE_URL = import.meta.env.PROD
-  ? '/api'
-  : (import.meta.env.VITE_API_BASE_URL || '')
-const ANALYSIS_TIMEOUT_MS = 30 * 1000
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8765'
+const ANALYSIS_TIMEOUT_MS = 10 * 60 * 1000
 
 async function request(path, options = {}) {
   const controller = new AbortController()
@@ -16,15 +14,7 @@ async function request(path, options = {}) {
         ...options.headers,
       },
     })
-    const responseText = await response.text()
-    let body
-    try {
-      body = responseText ? JSON.parse(responseText) : {}
-    } catch {
-      throw new Error(
-        `API returned a non-JSON response (status ${response.status}). Check the deployed API service route.`,
-      )
-    }
+    const body = await response.json()
     if (!response.ok) {
       throw new Error(body.detail || `Request failed with status ${response.status}`)
     }
@@ -32,11 +22,11 @@ async function request(path, options = {}) {
   } catch (error) {
     if (error.name === 'AbortError') {
       throw new Error(
-        'The API request exceeded 30 seconds. Check that the selected local API server is running.',
+        'The analysis exceeded 10 minutes. The first run may still be loading ML models; check the API terminal for details.',
       )
     }
     if (error instanceof TypeError) {
-      throw new Error(`Cannot reach the API at ${API_BASE_URL || 'the local proxy'}.`)
+      throw new Error(`Cannot reach the API at ${API_BASE_URL}. Start the FastAPI server first.`)
     }
     throw error
   } finally {
