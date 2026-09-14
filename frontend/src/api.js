@@ -1,5 +1,5 @@
 const API_BASE_URL = import.meta.env.PROD
-  ? '/api'
+  ? ''
   : (import.meta.env.VITE_API_BASE_URL || '')
 const ANALYSIS_TIMEOUT_MS = 30 * 1000
 

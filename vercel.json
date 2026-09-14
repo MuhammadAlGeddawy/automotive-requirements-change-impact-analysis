@@ -9,9 +9,9 @@
       "outputDirectory": "dist"
     },
     "backend": {
-      "root": ".",
+      "root": "api/",
       "framework": "fastapi",
-      "entrypoint": "api:app"
+      "entrypoint": "index:app"
     }
   },
   "rewrites": [
