@@ -1,6 +1,6 @@
-const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL ||
-  (import.meta.env.PROD ? '/svc/api' : '')
+const API_BASE_URL = import.meta.env.PROD
+  ? '/svc/api'
+  : (import.meta.env.VITE_API_BASE_URL || '')
 const ANALYSIS_TIMEOUT_MS = 30 * 1000
 
 async function request(path, options = {}) {
