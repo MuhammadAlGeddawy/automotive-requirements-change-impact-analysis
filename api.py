@@ -154,6 +154,8 @@ def _analysis_payload(result: Any) -> dict[str, Any]:
                 "impactTier": LABEL_TO_TIER[label],
                 "llmLabel": label,
                 "confidence": _json_value(confidence),
+                "reason": assessment.reason if assessment else "",
+                "evidence": assessment.evidence if assessment else [],
                 "traceability": "linked" if bool(row["graph_linked"]) else "graph_unlinked",
                 "traceabilityPaths": _traceability_paths(row),
                 "engineeringContent": str(row["text"]),

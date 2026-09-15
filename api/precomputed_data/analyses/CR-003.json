@@ -2,8 +2,8 @@
   "changeId": "CR-003",
   "requirementId": "SR-005",
   "highImpact": 3,
-  "mediumImpact": 0,
-  "lowImpact": 7,
+  "mediumImpact": 1,
+  "lowImpact": 6,
   "totalAffected": 10,
   "impactChain": [
     {
@@ -22,6 +22,10 @@
       "impactTier": "high",
       "llmLabel": "DIRECT",
       "confidence": 0.95,
+      "reason": "Explicitly specifies the 200 ms timing for audible warning that changed to 100 ms.",
+      "evidence": [
+        "The driver warning controller shall issue an audible warning within 200 milliseconds of hazard confirmation."
+      ],
       "traceability": "linked",
       "traceabilityPaths": [
         [
@@ -42,7 +46,11 @@
       "artifactType": "system_requirement",
       "impactTier": "low",
       "llmLabel": "NO_IMPACT",
-      "confidence": 0.9,
+      "confidence": 0.3,
+      "reason": "No evidence linking hazard detection to the warning timing parameter.",
+      "evidence": [
+        "The driver warning controller shall detect confirmed hazards."
+      ],
       "traceability": "linked",
       "traceabilityPaths": [
         [
@@ -64,6 +72,10 @@
       "impactTier": "high",
       "llmLabel": "DIRECT",
       "confidence": 0.95,
+      "reason": "Explicitly specifies the 200 ms timing for audible warning generation that changed to 100 ms.",
+      "evidence": [
+        "The warning output task shall generate an audible warning within 200 milliseconds."
+      ],
       "traceability": "linked",
       "traceabilityPaths": [
         [
@@ -89,6 +101,10 @@
       "impactTier": "high",
       "llmLabel": "DIRECT",
       "confidence": 0.95,
+      "reason": "Verifies the 200 ms timing for audible warning generation that changed to 100 ms.",
+      "evidence": [
+        "Verify audible warning is generated within 200 milliseconds."
+      ],
       "traceability": "linked",
       "traceabilityPaths": [
         [
@@ -117,7 +133,11 @@
       "artifactType": "component",
       "impactTier": "low",
       "llmLabel": "NO_IMPACT",
-      "confidence": 0.9,
+      "confidence": 0.3,
+      "reason": "No evidence the component specifies or relates to the 200/100 ms timing parameter.",
+      "evidence": [
+        "Generates audible driver warnings."
+      ],
       "traceability": "linked",
       "traceabilityPaths": [
         [
@@ -146,7 +166,11 @@
       "artifactType": "system_requirement",
       "impactTier": "low",
       "llmLabel": "NO_IMPACT",
-      "confidence": 0.9,
+      "confidence": 0.3,
+      "reason": "No evidence linking event timestamping to the audible warning timing change.",
+      "evidence": [
+        "The warning controller shall timestamp hazard confirmation events."
+      ],
       "traceability": "linked",
       "traceabilityPaths": [
         [
@@ -167,7 +191,11 @@
       "artifactType": "component",
       "impactTier": "low",
       "llmLabel": "NO_IMPACT",
-      "confidence": 0.9,
+      "confidence": 0.3,
+      "reason": "No evidence the component specifies or relates to the 200/100 ms timing parameter.",
+      "evidence": [
+        "Manages confirmed hazards and warning events."
+      ],
       "traceability": "linked",
       "traceabilityPaths": [
         [
@@ -214,7 +242,11 @@
       "artifactType": "software_requirement",
       "impactTier": "low",
       "llmLabel": "NO_IMPACT",
-      "confidence": 0.9,
+      "confidence": 0.3,
+      "reason": "No evidence linking hazard detection to the warning timing parameter.",
+      "evidence": [
+        "The hazard manager shall detect confirmed hazard events."
+      ],
       "traceability": "linked",
       "traceabilityPaths": [
         [
@@ -239,7 +271,11 @@
       "artifactType": "software_requirement",
       "impactTier": "low",
       "llmLabel": "NO_IMPACT",
-      "confidence": 0.9,
+      "confidence": 0.3,
+      "reason": "No evidence linking hazard timestamping to the audible warning timing change.",
+      "evidence": [
+        "The hazard manager shall attach a timestamp to confirmed hazards."
+      ],
       "traceability": "linked",
       "traceabilityPaths": [
         [
@@ -262,9 +298,13 @@
     {
       "artifactId": "TC-005",
       "artifactType": "test_case",
-      "impactTier": "low",
-      "llmLabel": "NO_IMPACT",
-      "confidence": 0.9,
+      "impactTier": "medium",
+      "llmLabel": "POTENTIAL",
+      "confidence": 0.65,
+      "reason": "Functionally related to driver warning generation, but direct impact on timing not proven.",
+      "evidence": [
+        "Verify low tire pressure generates a driver warning."
+      ],
       "traceability": "graph_unlinked",
       "traceabilityPaths": [],
       "engineeringContent": "Verify low tire pressure generates a driver warning."

@@ -22,6 +22,10 @@
       "impactTier": "high",
       "llmLabel": "DIRECT",
       "confidence": 0.95,
+      "reason": "The artifact specifies the exact open-door event reporting timing being tightened from 100ms to 50ms.",
+      "evidence": [
+        "The door controller shall report an open-door event within 100 milliseconds."
+      ],
       "traceability": "linked",
       "traceabilityPaths": [
         [
@@ -43,6 +47,10 @@
       "impactTier": "high",
       "llmLabel": "DIRECT",
       "confidence": 0.95,
+      "reason": "The artifact specifies the exact open-door event publishing timing being tightened from 100ms to 50ms.",
+      "evidence": [
+        "The door event task shall publish an open-door event within 100 milliseconds."
+      ],
       "traceability": "linked",
       "traceabilityPaths": [
         [
@@ -68,6 +76,10 @@
       "impactTier": "high",
       "llmLabel": "DIRECT",
       "confidence": 0.95,
+      "reason": "The test case verifies the exact open-door event publishing timing of 100ms being changed to 50ms.",
+      "evidence": [
+        "Verify open-door event is published within 100 milliseconds."
+      ],
       "traceability": "linked",
       "traceabilityPaths": [
         [
@@ -96,7 +108,11 @@
       "artifactType": "system_requirement",
       "impactTier": "medium",
       "llmLabel": "POTENTIAL",
-      "confidence": 0.8,
+      "confidence": 0.75,
+      "reason": "The artifact specifies door sampling rate functionally related to detection timing but does not explicitly contain the changed threshold.",
+      "evidence": [
+        "The door controller shall sample door state at least every 20 milliseconds."
+      ],
       "traceability": "linked",
       "traceabilityPaths": [
         [
@@ -117,7 +133,11 @@
       "artifactType": "system_requirement",
       "impactTier": "medium",
       "llmLabel": "POTENTIAL",
-      "confidence": 0.8,
+      "confidence": 0.75,
+      "reason": "The artifact requires detecting door state changes but does not specify the timing threshold being changed.",
+      "evidence": [
+        "The door controller shall detect door state changes."
+      ],
       "traceability": "linked",
       "traceabilityPaths": [
         [
@@ -138,7 +158,11 @@
       "artifactType": "software_requirement",
       "impactTier": "medium",
       "llmLabel": "POTENTIAL",
-      "confidence": 0.8,
+      "confidence": 0.75,
+      "reason": "The artifact specifies door sampling task execution rate functionally related to detection timing but does not explicitly contain the changed threshold.",
+      "evidence": [
+        "The door sampling task shall execute every 20 milliseconds."
+      ],
       "traceability": "linked",
       "traceabilityPaths": [
         [
@@ -163,7 +187,11 @@
       "artifactType": "software_requirement",
       "impactTier": "medium",
       "llmLabel": "POTENTIAL",
-      "confidence": 0.8,
+      "confidence": 0.75,
+      "reason": "The artifact requires detecting door-state transitions but does not specify the timing threshold being changed.",
+      "evidence": [
+        "The door monitor shall detect door-state transitions."
+      ],
       "traceability": "linked",
       "traceabilityPaths": [
         [
@@ -188,7 +216,11 @@
       "artifactType": "test_case",
       "impactTier": "low",
       "llmLabel": "NO_IMPACT",
-      "confidence": 0.9,
+      "confidence": 0.95,
+      "reason": "The test case verifies sampling execution rate, which is unrelated to the open-door detection timing requirement.",
+      "evidence": [
+        "Verify door sampling executes every 20 milliseconds."
+      ],
       "traceability": "linked",
       "traceabilityPaths": [
         [
@@ -217,7 +249,11 @@
       "artifactType": "component",
       "impactTier": "medium",
       "llmLabel": "POTENTIAL",
-      "confidence": 0.8,
+      "confidence": 0.75,
+      "reason": "The artifact monitors door states but does not specify the timing threshold being changed; functionally related to door detection but direct impact not proven.",
+      "evidence": [
+        "Monitors door states."
+      ],
       "traceability": "linked",
       "traceabilityPaths": [
         [
@@ -282,7 +318,11 @@
       "artifactType": "system_requirement",
       "impactTier": "low",
       "llmLabel": "NO_IMPACT",
-      "confidence": 0.9,
+      "confidence": 0.95,
+      "reason": "The artifact concerns driver warning for hazard confirmation, unrelated to the open-door detection timing requirement.",
+      "evidence": [
+        "The driver warning controller shall issue an audible warning within 200 milliseconds of hazard confirmation."
+      ],
       "traceability": "graph_unlinked",
       "traceabilityPaths": [],
       "engineeringContent": "The driver warning controller shall issue an audible warning within 200 milliseconds of hazard confirmation."

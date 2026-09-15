@@ -2,8 +2,8 @@
   "changeId": "CR-004",
   "requirementId": "SR-008",
   "highImpact": 3,
-  "mediumImpact": 2,
-  "lowImpact": 5,
+  "mediumImpact": 1,
+  "lowImpact": 6,
   "totalAffected": 10,
   "impactChain": [
     {
@@ -22,6 +22,10 @@
       "impactTier": "high",
       "llmLabel": "DIRECT",
       "confidence": 0.95,
+      "reason": "Explicitly specifies 50 mV threshold for cell voltage deviation.",
+      "evidence": [
+        "Text states 'report a cell voltage deviation when the difference exceeds 50 mV'."
+      ],
       "traceability": "linked",
       "traceabilityPaths": [
         [
@@ -42,7 +46,11 @@
       "artifactType": "software_requirement",
       "impactTier": "medium",
       "llmLabel": "POTENTIAL",
-      "confidence": 0.85,
+      "confidence": 0.65,
+      "reason": "Functionally related but threshold not specified.",
+      "evidence": [
+        "Text states 'calculate voltage deviation across cells' without mentioning a threshold."
+      ],
       "traceability": "linked",
       "traceabilityPaths": [
         [
@@ -67,7 +75,11 @@
       "artifactType": "software_requirement",
       "impactTier": "high",
       "llmLabel": "DIRECT",
-      "confidence": 0.92,
+      "confidence": 0.95,
+      "reason": "Explicitly specifies 50 mV threshold for reporting deviation.",
+      "evidence": [
+        "Text states 'report deviation when it exceeds 50 mV'."
+      ],
       "traceability": "linked",
       "traceabilityPaths": [
         [
@@ -92,7 +104,11 @@
       "artifactType": "system_requirement",
       "impactTier": "low",
       "llmLabel": "NO_IMPACT",
-      "confidence": 0.9,
+      "confidence": 0.2,
+      "reason": "Relates to voltage measurement, not deviation thresholds.",
+      "evidence": [
+        "Text states 'measure individual cell voltages' without referencing deviations or thresholds."
+      ],
       "traceability": "linked",
       "traceabilityPaths": [
         [
@@ -113,7 +129,11 @@
       "artifactType": "system_requirement",
       "impactTier": "low",
       "llmLabel": "NO_IMPACT",
-      "confidence": 0.9,
+      "confidence": 0.2,
+      "reason": "Relates to voltage sampling rate, not deviation thresholds.",
+      "evidence": [
+        "Text states 'sample cell voltage at least every 100 milliseconds' without referencing deviations."
+      ],
       "traceability": "linked",
       "traceabilityPaths": [
         [
@@ -134,7 +154,11 @@
       "artifactType": "test_case",
       "impactTier": "high",
       "llmLabel": "DIRECT",
-      "confidence": 0.94,
+      "confidence": 0.95,
+      "reason": "Explicitly tests 50 mV deviation threshold.",
+      "evidence": [
+        "Text states 'Verify cell voltage deviation above 50 mV is reported'."
+      ],
       "traceability": "linked",
       "traceabilityPaths": [
         [
@@ -161,9 +185,13 @@
     {
       "artifactId": "COMP-012",
       "artifactType": "component",
-      "impactTier": "medium",
-      "llmLabel": "POTENTIAL",
-      "confidence": 0.8,
+      "impactTier": "low",
+      "llmLabel": "NO_IMPACT",
+      "confidence": 0.2,
+      "reason": "Relates to voltage monitoring, not deviation thresholds.",
+      "evidence": [
+        "Text states 'Monitors individual cell voltages' without referencing deviations or thresholds."
+      ],
       "traceability": "linked",
       "traceabilityPaths": [
         [
@@ -228,7 +256,11 @@
       "artifactType": "software_requirement",
       "impactTier": "low",
       "llmLabel": "NO_IMPACT",
-      "confidence": 0.9,
+      "confidence": 0.2,
+      "reason": "Relates to sampling task execution, not deviation thresholds.",
+      "evidence": [
+        "Text states 'The battery sampling task shall execute every 100 milliseconds' without referencing deviations."
+      ],
       "traceability": "linked",
       "traceabilityPaths": [
         [
@@ -253,7 +285,11 @@
       "artifactType": "test_case",
       "impactTier": "low",
       "llmLabel": "NO_IMPACT",
-      "confidence": 0.9,
+      "confidence": 0.2,
+      "reason": "Relates to battery sampling execution, not deviation thresholds.",
+      "evidence": [
+        "Text states 'Verify battery sampling executes every 100 milliseconds' without referencing deviations."
+      ],
       "traceability": "linked",
       "traceabilityPaths": [
         [
@@ -282,7 +318,11 @@
       "artifactType": "system_requirement",
       "impactTier": "low",
       "llmLabel": "NO_IMPACT",
-      "confidence": 0.95,
+      "confidence": 0.2,
+      "reason": "Unrelated lane monitoring system.",
+      "evidence": [
+        "Text references 'lane monitoring system' and 'lane position', completely different system."
+      ],
       "traceability": "graph_unlinked",
       "traceabilityPaths": [],
       "engineeringContent": "The lane monitoring system shall update lane position at least every 50 milliseconds."

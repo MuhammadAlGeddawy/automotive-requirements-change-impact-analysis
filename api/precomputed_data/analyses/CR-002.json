@@ -2,8 +2,8 @@
   "changeId": "CR-002",
   "requirementId": "SR-002",
   "highImpact": 3,
-  "mediumImpact": 2,
-  "lowImpact": 5,
+  "mediumImpact": 0,
+  "lowImpact": 7,
   "totalAffected": 10,
   "impactChain": [
     {
@@ -22,6 +22,10 @@
       "impactTier": "high",
       "llmLabel": "DIRECT",
       "confidence": 0.95,
+      "reason": "Threshold 100 lux explicitly referenced for headlight activation.",
+      "evidence": [
+        "Text references 100 lux threshold for headlight activation."
+      ],
       "traceability": "linked",
       "traceabilityPaths": [
         [
@@ -43,6 +47,10 @@
       "impactTier": "high",
       "llmLabel": "DIRECT",
       "confidence": 0.95,
+      "reason": "Test case explicitly verifies activation below 100 lux.",
+      "evidence": [
+        "Test case specifies activation below 100 lux."
+      ],
       "traceability": "linked",
       "traceabilityPaths": [
         [
@@ -72,6 +80,10 @@
       "impactTier": "high",
       "llmLabel": "DIRECT",
       "confidence": 0.95,
+      "reason": "Software requirement specifies filtered lux < 100.",
+      "evidence": [
+        "Software requirement specifies filtered lux < 100."
+      ],
       "traceability": "linked",
       "traceabilityPaths": [
         [
@@ -94,9 +106,13 @@
     {
       "artifactId": "SWR-003",
       "artifactType": "software_requirement",
-      "impactTier": "medium",
-      "llmLabel": "POTENTIAL",
-      "confidence": 0.8,
+      "impactTier": "low",
+      "llmLabel": "NO_IMPACT",
+      "confidence": 0.85,
+      "reason": "No threshold reference; concerns filtered lux calculation only.",
+      "evidence": [
+        "Text specifies calculation of filtered lux values, not activation threshold."
+      ],
       "traceability": "linked",
       "traceabilityPaths": [
         [
@@ -121,7 +137,11 @@
       "artifactType": "software_requirement",
       "impactTier": "low",
       "llmLabel": "NO_IMPACT",
-      "confidence": 0.2,
+      "confidence": 0.85,
+      "reason": "No threshold reference; concerns task execution period.",
+      "evidence": [
+        "Text specifies execution period of 100 milliseconds, not activation threshold."
+      ],
       "traceability": "linked",
       "traceabilityPaths": [
         [
@@ -144,9 +164,13 @@
     {
       "artifactId": "COMP-003",
       "artifactType": "component",
-      "impactTier": "medium",
-      "llmLabel": "POTENTIAL",
-      "confidence": 0.8,
+      "impactTier": "low",
+      "llmLabel": "NO_IMPACT",
+      "confidence": 0.85,
+      "reason": "No threshold reference; generic component description.",
+      "evidence": [
+        "Text describes filtering and control without specifying lux threshold."
+      ],
       "traceability": "linked",
       "traceabilityPaths": [
         [
@@ -193,7 +217,11 @@
       "artifactType": "system_requirement",
       "impactTier": "low",
       "llmLabel": "NO_IMPACT",
-      "confidence": 0.2,
+      "confidence": 0.85,
+      "reason": "No threshold reference; concerns sampling period.",
+      "evidence": [
+        "Text specifies sampling ambient light every 100 milliseconds, not activation threshold."
+      ],
       "traceability": "linked",
       "traceabilityPaths": [
         [
@@ -214,7 +242,11 @@
       "artifactType": "test_case",
       "impactTier": "low",
       "llmLabel": "NO_IMPACT",
-      "confidence": 0.2,
+      "confidence": 0.85,
+      "reason": "No threshold reference; verifies conversion to filtered lux only.",
+      "evidence": [
+        "Test case verifies ambient light conversion to filtered lux, not threshold comparison."
+      ],
       "traceability": "linked",
       "traceabilityPaths": [
         [
@@ -243,7 +275,11 @@
       "artifactType": "system_requirement",
       "impactTier": "low",
       "llmLabel": "NO_IMPACT",
-      "confidence": 0.2,
+      "confidence": 0.85,
+      "reason": "No threshold reference; concerns measurement of ambient light intensity.",
+      "evidence": [
+        "Text specifies measurement of ambient light intensity, not threshold comparison."
+      ],
       "traceability": "linked",
       "traceabilityPaths": [
         [
@@ -264,7 +300,11 @@
       "artifactType": "test_case",
       "impactTier": "low",
       "llmLabel": "NO_IMPACT",
-      "confidence": 0.2,
+      "confidence": 0.85,
+      "reason": "No threshold reference; concerns execution period of ambient-light processing.",
+      "evidence": [
+        "Text specifies execution period of at least 100 milliseconds, not activation threshold."
+      ],
       "traceability": "linked",
       "traceabilityPaths": [
         [

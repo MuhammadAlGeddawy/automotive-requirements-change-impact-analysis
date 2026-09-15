@@ -62,11 +62,11 @@ function ImpactedArtifactsTable({ artifacts }) {
           Impacted artifacts
         </h2>
         <p className="mt-1 text-xs text-muted">
-          Double-click engineering content to expand or collapse the full text.
+          Double-click reason, evidence, or engineering content to expand or collapse the full text.
         </p>
       </div>
       <div className="overflow-x-auto rounded-nasaq bg-white/75 shadow-sm">
-        <table className="w-full min-w-[900px] border-collapse text-left">
+        <table className="w-full min-w-[1200px] border-collapse text-left">
           <thead className="sticky top-0 border-b border-brand-dark/10 bg-white/95 text-[11px] uppercase tracking-[0.05em] text-muted">
             <tr>
               <th className="px-4 py-3 font-semibold">Artifact</th>
@@ -74,7 +74,8 @@ function ImpactedArtifactsTable({ artifacts }) {
               <th className="px-4 py-3 font-semibold">Impact</th>
               <th className="px-4 py-3 text-right font-semibold">Confidence</th>
               <th className="px-4 py-3 font-semibold">Traceability</th>
-              <th className="w-[360px] px-4 py-3 font-semibold">Engineering content</th>
+              <th className="w-[320px] px-4 py-3 font-semibold">Reason &amp; evidence</th>
+              <th className="w-[300px] px-4 py-3 font-semibold">Engineering content</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-brand-dark/10 text-sm">
@@ -104,7 +105,44 @@ function ImpactedArtifactsTable({ artifacts }) {
                   )}
                 </td>
                 <td
-                  className={`max-w-[360px] cursor-pointer px-4 py-4 text-body ${
+                  className={`max-w-[320px] cursor-pointer px-4 py-4 text-body ${
+                    expandedArtifacts.has(artifact.artifactId) ? 'whitespace-normal' : ''
+                  }`}
+                  aria-label={`Reason and evidence for ${artifact.artifactId}. Double-click to expand or collapse.`}
+                  title={artifact.reason}
+                  onDoubleClick={() => toggleArtifactContent(artifact.artifactId)}
+                >
+                  {artifact.reason ? (
+                    <>
+                      <p>
+                        {expandedArtifacts.has(artifact.artifactId)
+                          ? artifact.reason
+                          : shortenAtWord(artifact.reason)}
+                      </p>
+                      {artifact.evidence?.length > 0 && (
+                        <ul className="mt-1.5 space-y-1 text-xs text-muted">
+                          {(expandedArtifacts.has(artifact.artifactId)
+                            ? artifact.evidence
+                            : artifact.evidence.slice(0, 1)
+                          ).map((item, index) => (
+                            <li key={index} className="flex gap-1.5">
+                              <span className="shrink-0 text-accent">•</span>
+                              <span>
+                                {expandedArtifacts.has(artifact.artifactId)
+                                  ? item
+                                  : shortenAtWord(item, 60)}
+                              </span>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </>
+                  ) : (
+                    <span className="text-muted">—</span>
+                  )}
+                </td>
+                <td
+                  className={`max-w-[300px] cursor-pointer px-4 py-4 text-body ${
                     expandedArtifacts.has(artifact.artifactId) ? 'whitespace-normal' : ''
                   }`}
                   aria-label={`Engineering content for ${artifact.artifactId}. Double-click to expand or collapse.`}

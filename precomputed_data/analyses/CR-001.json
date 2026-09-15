@@ -22,6 +22,10 @@
       "impactTier": "high",
       "llmLabel": "DIRECT",
       "confidence": 0.95,
+      "reason": "The artifact explicitly specifies the 2-meter detection threshold that changed.",
+      "evidence": [
+        "The obstacle detection system shall detect objects at distances up to 2 meters."
+      ],
       "traceability": "linked",
       "traceabilityPaths": [
         [
@@ -43,6 +47,10 @@
       "impactTier": "high",
       "llmLabel": "DIRECT",
       "confidence": 0.95,
+      "reason": "The artifact explicitly uses the 2-meter threshold for obstacle classification.",
+      "evidence": [
+        "The obstacle detector shall classify an obstacle as detected when distance <= 2 meters."
+      ],
       "traceability": "linked",
       "traceabilityPaths": [
         [
@@ -68,6 +76,10 @@
       "impactTier": "high",
       "llmLabel": "DIRECT",
       "confidence": 0.95,
+      "reason": "The artifact explicitly verifies obstacle detection at the 2-meter threshold that changed.",
+      "evidence": [
+        "Verify obstacle detection at 2 meters."
+      ],
       "traceability": "linked",
       "traceabilityPaths": [
         [
@@ -97,6 +109,10 @@
       "impactTier": "low",
       "llmLabel": "NO_IMPACT",
       "confidence": 0.95,
+      "reason": "The artifact concerns measurement publishing, not the detection range threshold.",
+      "evidence": [
+        "The obstacle detection system shall publish obstacle distance measurements to the vehicle controller."
+      ],
       "traceability": "linked",
       "traceabilityPaths": [
         [
@@ -118,6 +134,10 @@
       "impactTier": "low",
       "llmLabel": "NO_IMPACT",
       "confidence": 0.95,
+      "reason": "The artifact concerns sensor quality flag rejection, not detection range.",
+      "evidence": [
+        "The obstacle detection system shall reject obstacle measurements with invalid sensor quality flags."
+      ],
       "traceability": "linked",
       "traceabilityPaths": [
         [
@@ -139,6 +159,10 @@
       "impactTier": "low",
       "llmLabel": "NO_IMPACT",
       "confidence": 0.95,
+      "reason": "The artifact concerns measurement processing frequency, not detection range.",
+      "evidence": [
+        "The obstacle detection system shall process sensor measurements at 20 Hz."
+      ],
       "traceability": "linked",
       "traceabilityPaths": [
         [
@@ -160,6 +184,10 @@
       "impactTier": "high",
       "llmLabel": "DIRECT",
       "confidence": 0.95,
+      "reason": "The artifact explicitly verifies obstacle classification relative to the configured detection range that changed.",
+      "evidence": [
+        "Verify obstacles beyond the configured detection range are not classified as detected."
+      ],
       "traceability": "linked",
       "traceabilityPaths": [
         [
@@ -189,6 +217,10 @@
       "impactTier": "low",
       "llmLabel": "NO_IMPACT",
       "confidence": 0.95,
+      "reason": "The artifact concerns publishing obstacle distance measurements, not the detection range threshold.",
+      "evidence": [
+        "The obstacle processing task shall publish obstacle distance measurements."
+      ],
       "traceability": "linked",
       "traceabilityPaths": [
         [
@@ -214,6 +246,10 @@
       "impactTier": "low",
       "llmLabel": "NO_IMPACT",
       "confidence": 0.95,
+      "reason": "The artifact concerns a different system (parking assistance) with a different range, not the changed requirement.",
+      "evidence": [
+        "The parking assistance system shall detect obstacles at distances up to 1.5 meters."
+      ],
       "traceability": "graph_unlinked",
       "traceabilityPaths": [],
       "engineeringContent": "The parking assistance system shall detect obstacles at distances up to 1.5 meters."
@@ -224,6 +260,10 @@
       "impactTier": "low",
       "llmLabel": "NO_IMPACT",
       "confidence": 0.95,
+      "reason": "The artifact concerns publishing obstacle distance measurements, not the detection range threshold.",
+      "evidence": [
+        "Publishes obstacle distance measurements."
+      ],
       "traceability": "linked",
       "traceabilityPaths": [
         [
