@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { analyzeChange } from '../api'
 import ImpactChain from './ImpactChain'
 import ImpactedArtifactsTable from './ImpactedArtifactsTable'
+import ImpactRippleSummary from './ImpactRippleSummary'
 
 const stats = [
   ['High Impact', 'highImpact', 'Directly affected', 'text-badge-high-text'],
@@ -104,7 +105,7 @@ function KpiCards({ results }) {
   )
 }
 
-function ImpactAnalysis({ changeId, hasSelection, onStepChange }) {
+function ImpactAnalysis({ changeId, request, hasSelection, onStepChange }) {
   const [isAnalyzing, setIsAnalyzing] = useState(false)
   const [results, setResults] = useState(null)
   const [error, setError] = useState('')
@@ -172,6 +173,7 @@ function ImpactAnalysis({ changeId, hasSelection, onStepChange }) {
       )}
       {results && (
         <>
+          <ImpactRippleSummary request={request} artifacts={results.artifacts} />
           <KpiCards results={results} />
           <ImpactChain
             impactChain={results.impactChain}

@@ -87,6 +87,7 @@ function AppShell() {
                 <ImpactAnalysis
                   key={selectedId}
                   changeId={selectedId}
+                  request={selectedRequest}
                   hasSelection
                   onStepChange={setAnalysisStep}
                 />
